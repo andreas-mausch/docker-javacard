@@ -142,6 +142,9 @@ There are different tools to interact with JavaCards.
 - **pcsc_scan**
   a command-line tool that detects and displays information about smart card readers
   and smart cards connected to a system using the PC/SC (Personal Computer/Smart Card) interface.
+- **opensc-tool**
+  a command-line utility used to communicate with smart cards and manage
+  their contents using the OpenSC framework.
 - **scriptor**
   a command-line tool used to send APDU (Application Protocol Data Unit) commands
   to smart cards via a PC/SC interface.
