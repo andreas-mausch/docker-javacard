@@ -135,6 +135,28 @@ ISD: A000000151000000 (OP_READY)
 ...
 ```
 
+# Tools to work with JavaCards
+
+There are different tools to interact with JavaCards.
+
+- **pcsc_scan**
+  a command-line tool that detects and displays information about smart card readers
+  and smart cards connected to a system using the PC/SC (Personal Computer/Smart Card) interface.
+- **scriptor**
+  a command-line tool used to send APDU (Application Protocol Data Unit) commands
+  to smart cards via a PC/SC interface.
+- **GPShell**, a tool based on the C/C++ library GlobalPlatform,
+  which offers low-level scripting of JavaCards via `.gpshell` script files.
+- **gp.jar** / [GlobalPlatformPro](https://github.com/martinpaljak/GlobalPlatformPro)
+  A modern, Java-based CLI tool, lightweight, easier to use, and more developer-friendly.
+  Extensive CLI, but no support for script files.
+
+The naming is a bit confusing to me, because it is so similar.
+There is also the *GlobalPlatform Card Manager* on the JavaCard itself,
+a privileged on-card applet.
+
+See the [./docs](./docs) folder for usage examples for each.
+
 # Sources
 
 * Oracle Javacard SDKs  https://github.com/martinpaljak/oracle_javacard_sdks
