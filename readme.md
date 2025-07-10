@@ -139,18 +139,19 @@ ISD: A000000151000000 (OP_READY)
 
 There are different tools to interact with JavaCards.
 
-- **pcsc_scan**
+- **pcsc_scan**  
   a command-line tool that detects and displays information about smart card readers
   and smart cards connected to a system using the PC/SC (Personal Computer/Smart Card) interface.
-- **opensc-tool**
+- **opensc-tool**  
   a command-line utility used to communicate with smart cards and manage
   their contents using the OpenSC framework.
-- **scriptor**
+- **scriptor**  
   a command-line tool used to send APDU (Application Protocol Data Unit) commands
   to smart cards via a PC/SC interface.
-- **GPShell**, a tool based on the C/C++ library GlobalPlatform,
+- **GPShell**  
+  a tool based on the C/C++ library GlobalPlatform,
   which offers low-level scripting of JavaCards via `.gpshell` script files.
-- **gp.jar** / [GlobalPlatformPro](https://github.com/martinpaljak/GlobalPlatformPro)
+- **gp.jar** / [GlobalPlatformPro](https://github.com/martinpaljak/GlobalPlatformPro)  
   A modern, Java-based CLI tool, lightweight, easier to use, and more developer-friendly.
   Extensive CLI, but no support for script files.
 
