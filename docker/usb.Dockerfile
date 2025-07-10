@@ -13,6 +13,7 @@ RUN apt-get update && \
     libpcsclite-dev \
     opensc \
     ca-certificates \
+    gpshell \
     curl \
     git \
     unzip \
