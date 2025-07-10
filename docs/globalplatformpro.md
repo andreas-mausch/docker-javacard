@@ -81,3 +81,31 @@ Version:   1 (0x01) ID:   1 (0x01) type: DES3 length:  16
 Version:   1 (0x01) ID:   2 (0x02) type: DES3 length:  16 
 Version:   1 (0x01) ID:   3 (0x03) type: DES3 length:  16 
 ```
+
+# Verify keys are correct
+
+Try to use the default keys:
+
+```bash
+gp -v -l --key 404142434445464748494a4b4c4d4e4f
+```
+
+If you provide an invalid key, the result will look like this:
+
+```shell-session
+root@48deb8e45281:/# gp -v -l --key aaaa42434445464748494a4b4c4d4e4f
+# gp -v -l --key aaaa42434445464748494a4b4c4d4e4f
+# GlobalPlatformPro f2af9ef
+# Running on Linux 6.15.3-1-MANJARO amd64, Java 11.0.27 by Eclipse Adoptium
+[INFO] GPSession - Using card master key(s) with version 0 for setting up session with MAC 
+[INFO] GPSession - Diversified card keys: ENC=AAAA42434445464748494A4B4C4D4E4F (KCV: 70E390) MAC=AAAA42434445464748494A4B4C4D4E4F (KCV: 70E390) DEK=AAAA42434445464748494A4B4C4D4E4F (KCV: 70E390) for SCP02
+[INFO] GPSession - Session keys: ENC=7D48547CFDA834D1308D325A596CD8BE MAC=0430796DBC34112ACD57842567A88839 RMAC=9AD3621FA3011CE060981EA7809B5D2A
+Failed to open secure channel: Card cryptogram invalid!
+Received: 59E3BACC1FC431FE
+Expected: B20329C8B12953F9
+!!! DO NOT RE-TRY THE SAME COMMAND/KEYS OR YOU MAY BRICK YOUR CARD !!!
+Read more from https://github.com/martinpaljak/GlobalPlatformPro/wiki/Keys
+```
+
+Follow the advice: Do not try invalid keys too often,
+**otherwise your card will brick**!
