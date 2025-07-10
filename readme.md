@@ -158,6 +158,8 @@ The naming is a bit confusing to me, because it is so similar.
 There is also the *GlobalPlatform Card Manager* on the JavaCard itself,
 a privileged on-card applet.
 
+`gp.jar` is the most powerful tool of them, and the one I use most often.
+
 See the [./docs](./docs) folder for usage examples for each.
 
 # Sources
