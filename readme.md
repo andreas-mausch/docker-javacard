@@ -65,6 +65,8 @@ docker build -t javacard .
 
 # ant
 
+Commands are `ant applet` and `ant test`.
+
 ```shell-session
 $ docker run -it --rm -v ./examples/ant/helloworld:/applet javacard
 root@863d7039121e:/applet# ant test
@@ -130,44 +132,86 @@ Total time: 1 second
 root@863d7039121e:/applet# 
 ```
 
+Select your JavaCard SDK in the variables `jc.sdk` and `<javacard jckit="..">` values
+in the [./examples/ant/helloworld/build.xml](./examples/ant/helloworld/build.xml).
+
+You can adjust the AID in the `examples/ant/helloworld/build.xml` for
+the `.cap` and the java class to your needs.
+
 # gradle
+
+Commands are `gradle buildJavaCard` and `gradle test`.
 
 ```shell-session
 $ docker run -it --rm -v ./examples/gradle/helloworld:/applet javacard
-```
+root@6a37b06cb9b1:/applet# ./gradlew --version
 
-Start container:
-* `docker compose run --rm -ti javacard-gradle`
+------------------------------------------------------------
+Gradle 7.4.2
+------------------------------------------------------------
 
-Run tests:
-* `gradle test`
+Build time:   2022-03-31 15:25:29 UTC
+Revision:     540473b8118064efcc264694cbcaa4b677f61041
 
-```
-gradle@8aa816b693a5:/applet/helloworld$ gradle test
-...
+Kotlin:       1.5.31
+Groovy:       3.0.9
+Ant:          Apache Ant(TM) version 1.10.11 compiled on July 10 2021
+JVM:          11.0.27 (Eclipse Adoptium 11.0.27+6)
+OS:           Linux 6.15.6-1-MANJARO amd64
+
+root@6a37b06cb9b1:/applet# ./gradlew clean buildJavaCard test
+[ant:convert] [ INFO: ] Converter [v3.0.5]
+[ant:convert] [ INFO: ]     Copyright (c) 1998, 2020, Oracle and/or its affiliates. All rights reserved.warning: You did not supply export file for the previous minor version of the package
+[ant:convert] 
+[ant:convert]     
+[ant:convert]     
+[ant:convert] [ INFO: ] conversion completed with 0 errors and 1 warnings.
+
+> Task :buildJavaCard
+[ant:cap] INFO: using JavaCard 3.0.5 SDK in /javacard/oracle_javacard_sdks/jc305u4_kit
+[ant:cap] INFO: targeting JavaCard 3.0.5 SDK in /javacard/oracle_javacard_sdks/jc305u4_kit
+[ant:cap] Building CAP with 1 applet from package helloworld (AID: 01FFFF040506070809)
+[ant:cap] helloworld.HelloWorldApplet 01FFFF0405060708090102
+[ant:compile] Compiling files from /applet/src
+[ant:compile] Compiling 1 source file to /tmp/jccpro11955558934349392609
+[ant:verify] Verification passed
+[ant:cap] CAP saved to /applet/build/javacard/applet.cap
+[ant:exp] EXP saved to /applet/build/javacard/applet.exp/helloworld/javacard/helloworld.exp
+[ant:jca] JCA saved to /applet/build/javacard/applet.jca
+[ant:jar] Building jar: /applet/build/javacard/applet.exp/helloworld.jar
+[ant:jar] JAR saved to /applet/build/javacard/applet.exp/helloworld.jar
+
+> Task :test
+
+HelloWorldAppletTest > testPing() PASSED
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+See https://docs.gradle.org/7.4.2/userguide/command_line_interface.html#sec:command_line_warnings
+
 BUILD SUCCESSFUL in 2s
-3 actionable tasks: 2 executed
+5 actionable tasks: 5 executed
+root@6a37b06cb9b1:/applet#
 ```
-Build applet:
-* `gradle buildJavaCard`
 
-```
-gradle@3e496b0ab649:/applet$ gradle buildjavacard
-...
-BUILD SUCCESSFUL in 3s
-1 actionable task: 1 executed
-```
+Select your JavaCard SDK in the variables `JC_SELECTED` and `config.cap.targetsdk` values
+in the [./examples/gradle/helloworld/build.gradle](./examples/gradle/helloworld/build.gradle).
+
+You can adjust the AID in the `config.cap.applet.aid` for the `.cap`.
 
 # USB image to install applets to physical card
 
 To finally install the build cap file on a physical card 
-you can use the `javacard-usb` docker image.
+you can also use the docker image.
 
-In the `docker-compose.yml` maps the hosts systems `/dev/bus/usb`
-into the container so the cardreader can be accessed.
+We map the hosts systems `/dev/bus/usb` into the container,
+so the cardreader can be accessed.
 
 List cardreaders with `pcsc_scan`
-```
+
+```shell-session
 root@55557e33ca3f:/applet# pcsc_scan 
 Using reader plug'n play mechanism
 Scanning present readers...
@@ -180,8 +224,9 @@ Sun Jun  5 18:14:09 2022
 ```
 
 Query the card with `globalplatformpro`
-```
-root@a14755c4d73f:/javacard# java -jar gp.jar -list
+
+```shell-session
+root@a14755c4d73f:/javacard# gp -list
 Warning: no keys given, using default test key 404142434445464748494A4B4C4D4E4F
 ISD: A000000151000000 (OP_READY)
 ```

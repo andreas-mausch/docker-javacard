@@ -98,6 +98,7 @@ final def JC304 = libsSdk + '/jc304_kit'
 final def JC305 = libsSdk + '/jc305u1_kit'
 final def JC305u2 = libsSdk + '/jc305u2_kit'
 final def JC305u3 = libsSdk + '/jc305u3_kit'
+final def JC305u4 = libsSdk + '/jc305u4_kit'
 final def JC310b43 = libsSdk + '/jc310b43_kit'
 
 // Which JavaCard SDK to use - select
@@ -107,7 +108,7 @@ final def JC310b43 = libsSdk + '/jc310b43_kit'
 //
 // JC310b43 supports building also for lower versions (cap.targetsdk).
 // If another SDK is selected, please comment the cap.targetsdk setting.
-final def JC_SELECTED = JC305u3
+final def JC_SELECTED = JC305u4
 
 javacard {
 
@@ -131,7 +132,7 @@ javacard {
             // Here you can specify path to the SDK you want to use.
             // Only JC304 and higher are supported for targeting.
             // If JC310b43 is not used, targetsdk cannot be set.
-            targetsdk JC304
+            targetsdk JC305u4
 
             // Override java bytecode version if needed.
             // javaversion '1.7'
