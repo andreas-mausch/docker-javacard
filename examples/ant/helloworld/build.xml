@@ -2,7 +2,7 @@
 <project xmlns:jacoco="antlib:org.jacoco.ant" basedir="." default="applet" name="HelloWorld">
 
 
-    <property name="jc.sdk" value="jc305u3_kit"/>
+    <property name="jc.sdk" value="jc305u4_kit"/>
     <property name="main.build.dir" value="build/main"/>
     <property name="main.src.dir" value="src"/>
     <property name="test.build.dir" value="build/test"/>
@@ -24,7 +24,7 @@
 
     <target name="applet">
         <mkdir dir="build"/>
-        <javacard jckit="/javacard/oracle_javacard_sdks/jc222_kit/">
+        <javacard jckit="/javacard/oracle_javacard_sdks/jc305u4_kit/">
             <cap output="build/helloworld.cap" sources="src" aid="0102030405" version="1.0">
                 <applet class="helloworld.HelloWorldApplet" aid="0102030405060708"/>
             </cap>
