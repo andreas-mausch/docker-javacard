@@ -61,7 +61,13 @@ docker build -t javacard .
 
 # Download JavaCard SDK
 
-**TODO**
+JavaCard SDKs are downloaded from here:
+<https://github.com/martinpaljak/oracle_javacard_sdks>
+
+```bash
+git submodule init
+git submodule update
+```
 
 # ant
 
@@ -241,3 +247,8 @@ ISD: A000000151000000 (OP_READY)
 * jcardsim https://github.com/licel/jcardsim
 * Inspiration https://github.com/MrSuicideParrot/Make-JavaCards-Great-Again
 * HelloWorld Applet https://github.com/devrandom/javacard-helloworld
+
+# TODO
+
+- Install the applet on the real JavaCard: Which commands?
+- The the applet on the real JavaCard: How?
