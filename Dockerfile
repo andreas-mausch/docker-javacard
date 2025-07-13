@@ -31,6 +31,8 @@ ENV PATH=$JAVA_HOME/bin:$PATH
 COPY ./external /javacard
 RUN echo 'alias gp="java -jar /javacard/gp-v24.10.15.jar"' >> ~/.bashrc
 
+WORKDIR /applet
+
 # You might need to `pcscd --disable-polkit`:
 # https://github.com/LudovicRousseau/PCSC/issues/59
 CMD ["bash", "-c", "service pcscd start && bash"]
