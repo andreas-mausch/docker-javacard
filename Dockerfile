@@ -1,5 +1,5 @@
 # Debian 11 (debian:bookworm-slim) and 12 (debian:bullseye-slim) don't have support for JDK 8
-FROM eclipse-temurin:11-jdk
+FROM eclipse-temurin:11.0.27_6-jdk
 
 # Latest gp.jar requires Java 11
 
