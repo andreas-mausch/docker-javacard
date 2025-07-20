@@ -242,6 +242,12 @@ This causes `gp` to not try the default key.
 I have done that to not accidentially use a command on a production card with non-default keys,
 which would cause the lock-counter to increase.
 
+If you see this error message, you need to pass the key explicitly:
+
+```
+Invalid argument: Either all or nothing of enc/mac/dek keys must be set, and no mk at the same time!
+```
+
 # Sources
 
 * Original project https://github.com/xoryouyou/docker-javacard
