@@ -28,11 +28,11 @@ ENV PATH=$JAVA_HOME/bin:$PATH
 # ENV GP_TRACE=true
 # ENV GP_AID
 
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY ./external /javacard
 RUN echo 'alias gp="java -jar /javacard/gp-v24.10.15.jar"' >> ~/.bashrc
 
 WORKDIR /applet
 
-# You might need to `pcscd --disable-polkit`:
-# https://github.com/LudovicRousseau/PCSC/issues/59
-CMD ["bash", "-c", "service pcscd start && bash"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["bash"]
