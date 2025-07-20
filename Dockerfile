@@ -32,6 +32,11 @@ ENV PATH=$JAVA_HOME/bin:$PATH
 # ENV GP_TRACE=true
 # ENV GP_AID
 
+ENV GP_KEY=""
+ENV GP_KEY_ENC=""
+ENV GP_KEY_MAC=""
+ENV GP_KEY_DEK=""
+
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY ./external /javacard
 RUN echo 'alias gp="java -jar /javacard/gp-v24.10.15.jar"' >> ~/.bashrc

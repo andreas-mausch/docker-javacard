@@ -232,10 +232,15 @@ Sun Jun  5 18:14:09 2022
 Query the card with `globalplatformpro`
 
 ```shell-session
-root@a14755c4d73f:/javacard# gp -list
-Warning: no keys given, using default test key 404142434445464748494A4B4C4D4E4F
+root@a14755c4d73f:/javacard# gp --list --key 404142434445464748494A4B4C4D4E4F
 ISD: A000000151000000 (OP_READY)
 ```
+
+Note: I have explicitly set all `GP_KEY*` environment variables to an empty string.
+This causes `gp` to not try the default key.
+
+I have done that to not accidentially use a command on a production card with non-default keys,
+which would cause the lock-counter to increase.
 
 # Sources
 
