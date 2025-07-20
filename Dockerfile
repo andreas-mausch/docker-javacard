@@ -23,6 +23,10 @@ RUN apt-get update && \
 
 ENV JAVA_HOME=/opt/java/openjdk
 ENV PATH=$JAVA_HOME/bin:$PATH
+
+# Environment variables for GlobalPlatformPro
+# https://github.com/martinpaljak/GlobalPlatformPro/wiki/Getting-started
+
 # ENV GP_READER="ACS ACR122U PICC Interface"
 # ENV GP_READER_IGNORE="Yubikey;Alcor"
 # ENV GP_TRACE=true
