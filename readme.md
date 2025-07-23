@@ -53,12 +53,6 @@ a privileged on-card applet.
 
 See the [./docs](./docs) folder for usage examples for each.
 
-# Build the docker image
-
-```bash
-docker build -t javacard .
-```
-
 # Download JavaCard SDK
 
 JavaCard SDKs are downloaded from here:
@@ -67,6 +61,12 @@ JavaCard SDKs are downloaded from here:
 ```bash
 git submodule init
 git submodule update
+```
+
+# Build the docker image
+
+```bash
+docker build -t javacard .
 ```
 
 # ant
