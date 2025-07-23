@@ -53,7 +53,7 @@ a privileged on-card applet.
 
 See the [./docs/tools/](./docs/tools/) folder for usage examples for each.
 
-# Download JavaCard SDK
+# Download the JavaCard SDK
 
 JavaCard SDKs are downloaded from here:
 <https://github.com/martinpaljak/oracle_javacard_sdks>
@@ -76,13 +76,14 @@ Examples for ant and gradle are in the [./examples](./examples) folder.
 
 See [./docs/build-javacard-applet.md](./docs/build-javacard-applet.md) for details.
 
-# USB image to install applets to physical card
-
-To finally install the build cap file on a physical card 
-you can also use the docker image.
+# Access a physical card and list applets
 
 We map the hosts systems `/dev/bus/usb` into the container,
 so the cardreader can be accessed.
+
+The container runs the PC/SC Smart Card Daemon `pcscd` in the background
+to make your card accessible by the tools.
+See here [./docker-entrypoint.sh](./docker-entrypoint.sh).
 
 List cardreaders with `pcsc_scan`
 
@@ -117,6 +118,20 @@ If you see this error message, you need to pass the key explicitly:
 Invalid argument: Either all or nothing of enc/mac/dek keys must be set, and no mk at the same time!
 ```
 
+# Install an JavaCard applet onto a physical card
+
+To finally install the build cap file on a physical card
+you can also use the docker image.
+
+# Make a JavaCard production ready
+
+- Personalization
+- Change keys (ENC, MAC, DEK), in best case use different keys for each card (kdf3)
+- Set it to the `SECURED` lifecycle state.
+- Initialize applets.
+- Set Admin PINs / Owner PINs for applets.
+- Log: Save information about the card and which applets in which version are on it.
+
 # Sources
 
 * Original project https://github.com/xoryouyou/docker-javacard
@@ -131,6 +146,6 @@ Invalid argument: Either all or nothing of enc/mac/dek keys must be set, and no 
 # TODO
 
 - Install the applet on the real JavaCard: Which commands?
-- The the applet on the real JavaCard: How?
 - Use key derivation (kdf3) instead of fixed keys (so each card has unique keys)
+- How to make a JavaCard production ready?
 - Script files for gpshell for common, re-testable tasks (test SCP03, set new derivation keys and so on)
