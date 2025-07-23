@@ -280,7 +280,6 @@ Invalid argument: Either all or nothing of enc/mac/dek keys must be set, and no 
 
 # TODO
 
-- Get rid of gradle wrapper
 - Install the applet on the real JavaCard: Which commands?
 - The the applet on the real JavaCard: How?
 - Use key derivation (kdf3) instead of fixed keys (so each card has unique keys)
