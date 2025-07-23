@@ -88,6 +88,7 @@ See here [./docker-entrypoint.sh](./docker-entrypoint.sh).
 List cardreaders with `pcsc_scan`
 
 ```shell-session
+$ docker run -it --rm --device=/dev/bus/usb javacard
 root@55557e33ca3f:/applet# pcsc_scan 
 Using reader plug'n play mechanism
 Scanning present readers...
@@ -102,6 +103,7 @@ Sun Jun  5 18:14:09 2022
 Query the card with `globalplatformpro`
 
 ```shell-session
+$ docker run -it --rm --device=/dev/bus/usb javacard
 root@a14755c4d73f:/javacard# gp --list --key 404142434445464748494A4B4C4D4E4F
 ISD: A000000151000000 (OP_READY)
 ```
@@ -120,7 +122,7 @@ Invalid argument: Either all or nothing of enc/mac/dek keys must be set, and no 
 
 # Install a JavaCard applet onto a physical card
 
-To finally install the build cap file on a physical card
+To finally install the built `.cap` file on a physical card
 you can also use the docker image.
 
 # Make a JavaCard production ready
@@ -149,3 +151,4 @@ you can also use the docker image.
 - Use key derivation (kdf3) instead of fixed keys (so each card has unique keys)
 - How to make a JavaCard production ready?
 - Script files for gpshell for common, re-testable tasks (test SCP03, set new derivation keys and so on)
+- List my favorite applets
