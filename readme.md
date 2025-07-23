@@ -71,7 +71,11 @@ git submodule update
 
 # ant
 
-Commands are `ant applet` and `ant test`.
+Commands are `ant test` and `ant applet`.
+
+<details>
+
+<summary>ant test</summary>
 
 ```shell-session
 $ docker run -it --rm -v ./examples/ant/helloworld:/applet javacard
@@ -109,6 +113,15 @@ test:
 
 BUILD SUCCESSFUL
 Total time: 1 second
+```
+
+</details>
+<details>
+
+<summary>ant applet</summary>
+
+```shell-session
+$ docker run -it --rm -v ./examples/ant/helloworld:/applet javacard
 root@863d7039121e:/applet# ant applet
 Buildfile: /applet/build.xml
       [get] Destination already exists (skipping): /javacard/libs/ant-javacard.jar
@@ -135,8 +148,9 @@ applet:
 
 BUILD SUCCESSFUL
 Total time: 1 second
-root@863d7039121e:/applet# 
 ```
+
+</details>
 
 Select your JavaCard SDK in the variables `jc.sdk` and `<javacard jckit="..">` values
 in the [./examples/ant/helloworld/build.xml](./examples/ant/helloworld/build.xml).
@@ -151,6 +165,10 @@ Commands are `gradle buildJavaCard` and `gradle test`.
 The Gradle version used is `8.14.3` and specified in the Dockerfile.
 I explicitly do not use the Gradle wrapper because I think it is a bad concept.
 This is controversial though and you might disagree.
+
+<details>
+
+<summary>gradle --version</summary>
 
 ```shell-session
 $ docker run -it --rm -v ./examples/gradle/helloworld:/applet javacard
@@ -180,7 +198,16 @@ Ant:           Apache Ant(TM) version 1.10.15 compiled on August 25 2024
 Launcher JVM:  11.0.27 (Eclipse Adoptium 11.0.27+6)
 Daemon JVM:    /opt/java/openjdk (no JDK specified, using current Java home)
 OS:            Linux 6.15.7-1-MANJARO amd64
+```
 
+</details>
+
+<details>
+
+<summary>gradle clean buildJavaCard test</summary>
+
+```shell-session
+$ docker run -it --rm -v ./examples/gradle/helloworld:/applet javacard
 root@6a37b06cb9b1:/applet# gradle clean buildJavaCard test
 Starting a Gradle Daemon (subsequent builds will be faster)
 [ant:convert] [ INFO: ] Converter [v3.0.5]
@@ -218,8 +245,9 @@ For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/comma
 
 BUILD SUCCESSFUL in 22s
 5 actionable tasks: 5 executed
-root@6a37b06cb9b1:/applet#
 ```
+
+</details>
 
 Select your JavaCard SDK in the variables `JC_SELECTED` and `config.cap.targetsdk` values
 in the [./examples/gradle/helloworld/build.gradle](./examples/gradle/helloworld/build.gradle).
