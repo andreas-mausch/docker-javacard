@@ -1,7 +1,13 @@
-# Debian 11 (debian:bookworm-slim) and 12 (debian:bullseye-slim) don't have support for JDK 8
-FROM eclipse-temurin:11.0.27_6-jdk
+# syntax=docker/dockerfile:1
+# check=skip=SecretsUsedInArgOrEnv
 
+# Above is needed to avoid warnings like:
+# `SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "GP_KEY") (line 47)`
+# Yes, we do set a key here, but explictly to an empty value, which is not recognized by the rule.
+
+# Debian 11 (debian:bookworm-slim) and 12 (debian:bullseye-slim) don't have support for JDK 8
 # Latest gp.jar requires Java 11
+FROM eclipse-temurin:11.0.27_6-jdk
 
 RUN apt-get update && \
   apt-get install -y \
