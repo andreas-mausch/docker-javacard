@@ -6,7 +6,6 @@ FROM eclipse-temurin:11.0.27_6-jdk
 RUN apt-get update && \
   apt-get install -y \
     ant \
-    gradle \
     pcscd \
     pcsc-tools \
     libpcsclite1 \
@@ -21,8 +20,18 @@ RUN apt-get update && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
+# This image is based on Ubuntu and Gradle in Ubuntu is outdated,
+# so install it in a specific version.
+RUN curl -fsSL https://services.gradle.org/distributions/gradle-8.14.3-bin.zip -o /tmp/gradle-bin.zip && \
+  mkdir /opt/gradle && \
+  unzip -d /opt/gradle/ /tmp/gradle-bin.zip && \
+  mv /opt/gradle/gradle-*.*.*/* /opt/gradle/ && \
+  rmdir /opt/gradle/gradle-*.*.*/ && \
+  rm /tmp/gradle-bin.zip
+
 ENV JAVA_HOME=/opt/java/openjdk
-ENV PATH=$JAVA_HOME/bin:$PATH
+ENV GRADLE_HOME=/opt/gradle
+ENV PATH=$JAVA_HOME/bin:$GRADLE_HOME/bin:$PATH
 
 # Environment variables for GlobalPlatformPro
 # https://github.com/martinpaljak/GlobalPlatformPro/wiki/Getting-started

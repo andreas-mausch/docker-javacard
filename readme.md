@@ -148,28 +148,45 @@ the `.cap` and the java class to your needs.
 
 Commands are `gradle buildJavaCard` and `gradle test`.
 
+The Gradle version used is `8.14.3` and specified in the Dockerfile.
+I explicitly do not use the Gradle wrapper because I think it is a bad concept.
+This is controversial though and you might disagree.
+
 ```shell-session
 $ docker run -it --rm -v ./examples/gradle/helloworld:/applet javacard
-root@6a37b06cb9b1:/applet# ./gradlew --version
+root@6a37b06cb9b1:/applet# gradle --version
+
+Welcome to Gradle 8.14.3!
+
+Here are the highlights of this release:
+ - Java 24 support
+ - GraalVM Native Image toolchain selection
+ - Enhancements to test reporting
+ - Build Authoring improvements
+
+For more details see https://docs.gradle.org/8.14.3/release-notes.html
+
 
 ------------------------------------------------------------
-Gradle 7.4.2
+Gradle 8.14.3
 ------------------------------------------------------------
 
-Build time:   2022-03-31 15:25:29 UTC
-Revision:     540473b8118064efcc264694cbcaa4b677f61041
+Build time:    2025-07-04 13:15:44 UTC
+Revision:      e5ee1df3d88b8ca3a8074787a94f373e3090e1db
 
-Kotlin:       1.5.31
-Groovy:       3.0.9
-Ant:          Apache Ant(TM) version 1.10.11 compiled on July 10 2021
-JVM:          11.0.27 (Eclipse Adoptium 11.0.27+6)
-OS:           Linux 6.15.6-1-MANJARO amd64
+Kotlin:        2.0.21
+Groovy:        3.0.24
+Ant:           Apache Ant(TM) version 1.10.15 compiled on August 25 2024
+Launcher JVM:  11.0.27 (Eclipse Adoptium 11.0.27+6)
+Daemon JVM:    /opt/java/openjdk (no JDK specified, using current Java home)
+OS:            Linux 6.15.7-1-MANJARO amd64
 
-root@6a37b06cb9b1:/applet# ./gradlew clean buildJavaCard test
+root@6a37b06cb9b1:/applet# gradle clean buildJavaCard test
+Starting a Gradle Daemon (subsequent builds will be faster)
 [ant:convert] [ INFO: ] Converter [v3.0.5]
 [ant:convert] [ INFO: ]     Copyright (c) 1998, 2020, Oracle and/or its affiliates. All rights reserved.warning: You did not supply export file for the previous minor version of the package
-[ant:convert] 
 [ant:convert]     
+[ant:convert] 
 [ant:convert]     
 [ant:convert] [ INFO: ] conversion completed with 0 errors and 1 warnings.
 
@@ -191,13 +208,15 @@ root@6a37b06cb9b1:/applet# ./gradlew clean buildJavaCard test
 
 HelloWorldAppletTest > testPing() PASSED
 
-Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.
+[Incubating] Problems report is available at: file:///applet/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
 
 You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
 
-See https://docs.gradle.org/7.4.2/userguide/command_line_interface.html#sec:command_line_warnings
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
 
-BUILD SUCCESSFUL in 2s
+BUILD SUCCESSFUL in 22s
 5 actionable tasks: 5 executed
 root@6a37b06cb9b1:/applet#
 ```
@@ -261,5 +280,8 @@ Invalid argument: Either all or nothing of enc/mac/dek keys must be set, and no 
 
 # TODO
 
+- Get rid of gradle wrapper
 - Install the applet on the real JavaCard: Which commands?
 - The the applet on the real JavaCard: How?
+- Use key derivation (kdf3) instead of fixed keys (so each card has unique keys)
+- Script files for gpshell for common, re-testable tasks (test SCP03, set new derivation keys and so on)
