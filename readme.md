@@ -118,7 +118,7 @@ If you see this error message, you need to pass the key explicitly:
 Invalid argument: Either all or nothing of enc/mac/dek keys must be set, and no mk at the same time!
 ```
 
-# Install an JavaCard applet onto a physical card
+# Install a JavaCard applet onto a physical card
 
 To finally install the build cap file on a physical card
 you can also use the docker image.
