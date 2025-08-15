@@ -14,6 +14,7 @@ RUN apt-get update && \
     ant \
     pcscd \
     pcsc-tools \
+    libnfc-bin \
     libpcsclite1 \
     libpcsclite-dev \
     opensc \
