@@ -20,6 +20,10 @@ RUN apt-get update && \
     opensc \
     ca-certificates \
     gpshell \
+    python3-pip \
+    python3-pykcs11 \
+    python3-pyscard \
+    python3-virtualsmartcard \
     curl \
     git \
     unzip \
@@ -35,6 +39,12 @@ RUN curl -fsSL https://services.gradle.org/distributions/gradle-8.14.3-bin.zip -
   mv /opt/gradle/gradle-*.*.*/* /opt/gradle/ && \
   rmdir /opt/gradle/gradle-*.*.*/ && \
   rm /tmp/gradle-bin.zip
+
+# Install pcsc_ndef
+RUN mkdir /opt/pcsc-ndef && \
+  git clone https://github.com/Giraut/pcsc-ndef /opt/pcsc-ndef && \
+  git -C /opt/pcsc-ndef checkout b4acbf975e387fca77644fdf4767c531a54f94e5 && \
+  install -m 755 /opt/pcsc-ndef/pcsc_ndef.py /usr/bin/pcsc_ndef
 
 ENV JAVA_HOME=/opt/java/openjdk
 ENV GRADLE_HOME=/opt/gradle

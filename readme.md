@@ -152,3 +152,4 @@ you can also use the docker image.
 - How to make a JavaCard production ready?
 - Script files for gpshell for common, re-testable tasks (test SCP03, set new derivation keys and so on)
 - List my favorite applets
+- `pcsc_ndef --reader='Alcor Link AK9567 00 00' --wait=3 --type=2 getmax` doesn't work yet (`No tag found`)
