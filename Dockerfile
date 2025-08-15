@@ -15,6 +15,7 @@ RUN apt-get update && \
     pcscd \
     pcsc-tools \
     libnfc-bin \
+    libnfc-examples \
     libpcsclite1 \
     libpcsclite-dev \
     opensc \
