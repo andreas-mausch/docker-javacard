@@ -144,6 +144,42 @@ The `--params` are described here:
 
 # Make a JavaCard production ready
 
+## Change keys
+
+Use this command to generate a new random key in hex format:
+
+```bash
+cat /dev/random | head -c 16 | xxd -p -u
+```
+
+Now, run this command to change the three keys (ENC, MAC and DEK) to your own keys:
+
+```bash
+unset GP_KEY GP_KEY_ENC GP_KEY_MAC GP_KEY_DEK
+gp --verbose --debug --key-enc=404142434445464748494A4B4C4D4E4F --key-mac=404142434445464748494A4B4C4D4E4F --key-dek=404142434445464748494A4B4C4D4E4F --new-keyver=0x01 --lock-enc=C3E2493EC0537F35E883BD9861216EFB --lock-mac=712D973008D5D57C5D22B3167D86EEF9 --lock-dek=24E0F23524D6F961C6439F60EF51DF9D
+```
+
+TODO: This returns `Error: null`.
+Seems to be this [Github Issue #383](https://github.com/martinpaljak/GlobalPlatformPro/issues/383).
+
+The proposed solution `--new-keyver 0xAB` did not work for me.
+
+## Personalization
+
+Check this:
+<https://github.com/martinpaljak/GlobalPlatformPro/wiki/Lifecycle-management#setting-cplc-information>
+
+For example:
+
+```bash
+gp -set-pre-perso 1111111111111111 -set-perso 2222222222222222 -today
+```
+
+**Warning**:
+On some cards this can only be done ONCE!
+
+## TODO
+
 - Personalization
 - Change keys (ENC, MAC, DEK), in best case use different keys for each card (kdf3)
 - Set it to the `SECURED` lifecycle state.
