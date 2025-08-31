@@ -146,6 +146,8 @@ The `--params` are described here:
 
 ## Change keys
 
+### via GlobalPlatformPro (didn't work for me)
+
 Use this command to generate a new random key in hex format:
 
 ```bash
@@ -164,6 +166,42 @@ Seems to be this [Github Issue #383](https://github.com/martinpaljak/GlobalPlatf
 
 The proposed solution `--new-keyver 0xAB` did not work for me.
 
+Maybe related? <https://stackoverflow.com/questions/63714493/javacard-j2a040-changing-default-key-with-gpshell-script-not-work>
+
+### via gpshell (SUCCESS)
+
+I was able to change the keys following this:
+
+<https://github.com/kaoh/globalplatform/blob/2.4.2/gpshell/putKeysSCP03.txt>
+
+Only the first part was enough:
+
+```
+mode_211
+enable_trace
+enable_timer
+establish_context
+card_connect
+select -AID A000000151000000
+get_key_information_templates -noStop
+open_sc -security 3 -keyind 0 -keyver 0 -mac_key 404142434445464748494a4b4c4d4e4f -enc_key 404142434445464748494a4b4c4d4e4f -kek_key 404142434445464748494a4b4c4d4e4f
+put_sc_key -keyver 1 -newkeyver 1 -mac_key 712D973008D5D57C5D22B3167D86EEF9 -enc_key C3E2493EC0537F35E883BD9861216EFB -kek_key 24E0F23524D6F961C6439F60EF51DF9D
+card_disconnect
+```
+
+I don't know exactly what is different to the `gp` command, but it worked.
+Note the `dek` is named `kek` here, ChatGPT says:
+
+> However, some tools or documentation (like certain hardware vendor docs) may refer to DEK as KEK (Key Encryption Key).
+> They mean the same thing in this context.
+
+After running this and re-connecting the card, I was able to use the new keys:
+
+```bash
+unset GP_KEY GP_KEY_ENC GP_KEY_MAC GP_KEY_DEK
+gp --verbose --debug --key-mac=712D973008D5D57C5D22B3167D86EEF9 --key-enc=C3E2493EC0537F35E883BD9861216EFB --key-dek=24E0F23524D6F961C6439F60EF51DF9D --list
+```
+
 ## Personalization
 
 Check this:
@@ -181,7 +219,6 @@ On some cards this can only be done ONCE!
 ## TODO
 
 - Personalization
-- Change keys (ENC, MAC, DEK), in best case use different keys for each card (kdf3)
 - Set it to the `SECURED` lifecycle state.
 - Initialize applets.
 - Set Admin PINs / Owner PINs for applets.
