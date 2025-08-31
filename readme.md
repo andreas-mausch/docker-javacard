@@ -210,7 +210,7 @@ Check this:
 For example:
 
 ```bash
-gp -set-pre-perso 1111111111111111 -set-perso 2222222222222222 -today
+gp --verbose --debug --key-mac=712D973008D5D57C5D22B3167D86EEF9 --key-enc=C3E2493EC0537F35E883BD9861216EFB --key-dek=24E0F23524D6F961C6439F60EF51DF9D --set-pre-perso 1111111111111111 --set-perso 2222222222222222 --today
 ```
 
 **Warning**:
@@ -218,7 +218,6 @@ On some cards this can only be done ONCE!
 
 ## TODO
 
-- Personalization
 - Set it to the `SECURED` lifecycle state.
 - Initialize applets.
 - Set Admin PINs / Owner PINs for applets.
