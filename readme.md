@@ -216,9 +216,24 @@ gp --verbose --debug --key-mac=712D973008D5D57C5D22B3167D86EEF9 --key-enc=C3E249
 **Warning**:
 On some cards this can only be done ONCE!
 
+## Change card state to SECURED
+
+**These changes cannot be reversed!**
+
+### From OP_READY -> INITIALIZED
+
+```bash
+gp --verbose --debug --key-mac=712D973008D5D57C5D22B3167D86EEF9 --key-enc=C3E2493EC0537F35E883BD9861216EFB --key-dek=24E0F23524D6F961C6439F60EF51DF9D --initialize-card
+```
+
+### From INITIALIZED -> SECURED
+
+```bash
+gp --verbose --debug --key-mac=712D973008D5D57C5D22B3167D86EEF9 --key-enc=C3E2493EC0537F35E883BD9861216EFB --key-dek=24E0F23524D6F961C6439F60EF51DF9D --secure-card
+```
+
 ## TODO
 
-- Set it to the `SECURED` lifecycle state.
 - Initialize applets.
 - Set Admin PINs / Owner PINs for applets.
 - Log: Save information about the card and which applets in which version are on it.
@@ -237,7 +252,6 @@ On some cards this can only be done ONCE!
 # TODO
 
 - Use key derivation (kdf3) instead of fixed keys (so each card has unique keys)
-- How to make a JavaCard production ready?
 - Script files for gpshell for common, re-testable tasks (test SCP03, set new derivation keys and so on)
 - List my favorite applets
 - `pcsc_ndef --reader='Alcor Link AK9567 00 00' --wait=3 --type=4 getmax` doesn't work yet (`No tag found`)
