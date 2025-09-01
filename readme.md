@@ -135,11 +135,11 @@ You might want to use `--create` to define a custom AID.
 
 # Make a JavaCard production ready
 
-See here: [make-javacard-production-ready.md](make-javacard-production-ready.md).
+See here: [./docs/make-javacard-production-ready.md](./docs/make-javacard-production-ready.md).
 
 # My favorite applets
 
-See here: [FavoriteApplets.md](FavoriteApplets.md).
+See here: [./docs/FavoriteApplets.md](./docs/FavoriteApplets.md).
 
 ## TODO
 
