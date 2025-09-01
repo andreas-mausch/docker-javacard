@@ -125,26 +125,21 @@ Invalid argument: Either all or nothing of enc/mac/dek keys must be set, and no 
 To finally install the built `.cap` file on a physical card
 you can also use the docker image.
 
-```shell-session
-$ gp --key=404142434445464748494A4B4C4D4E4F --install /javacard/applets/SmartPGP-v1.22.2-jc304-rsa_up_to_4096.cap
-/javacard/applets/SmartPGP-v1.22.2-jc304-rsa_up_to_4096.cap loaded: fr.anssi.smartpgp D27600012401
-
-# DATA SIZE [0x12 0x02 [short size]]
-# 888 bytes = 0x0378
-$ gp --key=404142434445464748494A4B4C4D4E4F --params 12020378 --install /javacard/applets/openjavacard-ndef-full-plain.cap
+```bash
+gp --key=404142434445464748494A4B4C4D4E4F --install ./my_applet.cap
 ```
 
 You can specify the `--default` option to make it the default applet.
-
-The NDEF applet I have used is this one:
-<https://github.com/mohamadeq/javacard-ndef>
-
-The `--params` are described here:
-<https://github.com/mohamadeq/javacard-ndef/blob/e3b271d972a346c9287081b7eebf0a6ee6df08b4/README.md#install-time-configuration>
+Some applets might require `--params` to be configured at installation time.
+You might want to use `--create` to define a custom AID.
 
 # Make a JavaCard production ready
 
 See here: [make-javacard-production-ready.md](make-javacard-production-ready.md).
+
+# My favorite applets
+
+See here: [FavoriteApplets.md](FavoriteApplets.md).
 
 ## TODO
 
@@ -167,5 +162,4 @@ See here: [make-javacard-production-ready.md](make-javacard-production-ready.md)
 
 - Use key derivation (kdf3) instead of fixed keys (so each card has unique keys)
 - Script files for gpshell for common, re-testable tasks (test SCP03, set new derivation keys and so on)
-- List my favorite applets
 - `pcsc_ndef --reader='Alcor Link AK9567 00 00' --wait=3 --type=4 getmax` doesn't work yet (`No tag found`)
