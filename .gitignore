@@ -1,1 +1,6 @@
-examples/ant/helloworld/build
+examples/ant/helloworld/build/
+
+examples/gradle/helloworld/build/
+examples/gradle/helloworld/.gradle/
+examples/gradle/helloworld/.settings/
+examples/gradle/helloworld/.project
