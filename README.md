@@ -74,7 +74,7 @@ docker build -t javacard .
 You can build your own applet.
 Examples for ant and gradle are in the [./examples](./examples) folder.
 
-See [./docs/build-javacard-applet.md](./docs/build-javacard-applet.md) for details.
+See [./docs/BuildJavacardApplet.md](./docs/BuildJavacardApplet.md) for details.
 
 # Access a physical card and list applets
 
@@ -135,7 +135,7 @@ You might want to use `--create` to define a custom AID.
 
 # Make a JavaCard production ready
 
-See here: [./docs/make-javacard-production-ready.md](./docs/make-javacard-production-ready.md).
+See here: [./docs/MakeJavacardProductionReady.md](./docs/MakeJavacardProductionReady.md).
 
 # My favorite applets
 
