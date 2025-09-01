@@ -43,6 +43,7 @@ get_key_information_templates -noStop
 open_sc -security 3 -keyind 0 -keyver 0 -mac_key 404142434445464748494a4b4c4d4e4f -enc_key 404142434445464748494a4b4c4d4e4f -kek_key 404142434445464748494a4b4c4d4e4f
 put_sc_key -keyver 1 -newkeyver 1 -mac_key 712D973008D5D57C5D22B3167D86EEF9 -enc_key C3E2493EC0537F35E883BD9861216EFB -kek_key 24E0F23524D6F961C6439F60EF51DF9D
 card_disconnect
+release_context
 ```
 
 I don't know exactly what is different to the `gp` command, but it worked.
