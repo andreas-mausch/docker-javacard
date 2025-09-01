@@ -81,3 +81,6 @@ Example secrets:
 
 - `JBSWY3DPEHPK3PXP` (10 bytes, which is hex `48656C6C6F21DEADBEEF` and ASCII `Hello!....`
 - `JBSWY3DPEHPK3PXPJBSWY3DPEHPK3PXP` (20 bytes)
+
+I suggest to set an authentication code (password) for the card.
+You can set it inside the app.

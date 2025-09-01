@@ -141,12 +141,6 @@ See here: [./docs/MakeJavacardProductionReady.md](./docs/MakeJavacardProductionR
 
 See here: [./docs/FavoriteApplets.md](./docs/FavoriteApplets.md).
 
-## TODO
-
-- Initialize applets.
-- Set Admin PINs / Owner PINs for applets.
-- Log: Save information about the card and which applets in which version are on it.
-
 # Sources
 
 * Original project https://github.com/xoryouyou/docker-javacard

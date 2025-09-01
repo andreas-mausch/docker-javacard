@@ -94,6 +94,8 @@ gp --verbose --debug --key-mac=712D973008D5D57C5D22B3167D86EEF9 --key-enc=C3E249
 Since it is not possible to "factory reset" a JavaCard,
 I suggest to document all executed commands for a card.
 
+Also, document which applets in which version you have installed.
+
 Sometimes it is hard to know which applets you can remove
 without damaging the card or make it unusable, so it is
 especially important you you the applets and their AIDs
