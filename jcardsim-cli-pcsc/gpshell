@@ -1,0 +1,16 @@
+establish_context
+enable_trace
+card_connect
+
+# This is the same as "CREATE APPLET CMD" in the jcardsim-apdu.script
+# "CREATE APPLET" is not a default command, but a special command only for jCardSim.
+# Unfortunately, I didn't find a way to have it created automatically, for example
+# via an entry in the config file.
+# Only `loadApplet()` is available here:
+# https://github.com/licel/jcardsim/blob/aa60a02f042c18211e4d0f0aef75f27b0e5cf873/src/main/java/com/licel/jcardsim/base/Simulator.java#L114
+send_apdu -sc 0 -APDU 80b80000100701020304050607080102030405060701
+
+select -AID 01020304050607
+
+# Call the "Hello World" instruction (INS)
+send_apdu -sc 0 -APDU 8000000000

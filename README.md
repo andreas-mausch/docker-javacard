@@ -30,18 +30,27 @@ I have combined them into a single image.
 There are different tools to interact with JavaCards.
 
 - **pcsc_scan**  
+  [./docs/tools/pcsc_scan.md](./docs/tools/pcsc_scan.md)  
   a command-line tool that detects and displays information about smart card readers
   and smart cards connected to a system using the PC/SC (Personal Computer/Smart Card) interface.
 - **opensc-tool**  
+  [./docs/tools/opensc-tool.md](./docs/tools/opensc-tool.md)  
   a command-line utility used to communicate with smart cards and manage
   their contents using the OpenSC framework.
 - **scriptor**  
+  [./docs/tools/scriptor.md](./docs/tools/scriptor.md)  
   a command-line tool used to send APDU (Application Protocol Data Unit) commands
   to smart cards via a PC/SC interface.
+- **jCardSim**  
+  [./docs/tools/jcardsim-cli.md](./docs/tools/jcardsim-cli.md)  
+  a library which simulates a JavaCard.
+  Can be used either in unit tests or as a stand-alone CLI tool.
 - **GPShell**  
+  [./docs/tools/gpshell.md](./docs/tools/gpshell.md)  
   a tool based on the C/C++ library GlobalPlatform,
   which offers low-level scripting of JavaCards via `.gpshell` script files.
 - **gp.jar** / [GlobalPlatformPro](https://github.com/martinpaljak/GlobalPlatformPro)  
+  [./docs/tools/globalplatformpro.md](./docs/tools/globalplatformpro.md)  
   A modern, Java-based CLI tool, lightweight, easier to use, and more developer-friendly.
   Extensive CLI, but no support for script files.
 
