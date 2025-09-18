@@ -68,8 +68,7 @@ JavaCard SDKs are downloaded from here:
 <https://github.com/martinpaljak/oracle_javacard_sdks>
 
 ```bash
-git submodule init
-git submodule update
+git submodule update --init --recursive
 ```
 
 # Build the docker image
