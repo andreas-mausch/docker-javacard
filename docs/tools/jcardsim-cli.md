@@ -3,6 +3,12 @@
 Download latest jcardsim.jar, put it into `external/libs`:
 <https://github.com/licel/jcardsim/packages/1650016>
 
+Install these dependencies (on Arch Linux):
+
+```bash
+paru -S globalplatform gpshell gppcscconnectionplugin virtualsmartcard
+```
+
 ## Direct Simulation using an apdu.script file
 
 ```bash
