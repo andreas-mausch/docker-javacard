@@ -18,11 +18,3 @@ java --class-path=../external/libs/jcardsim-3.0.5-20230313.131323-6.jar:../examp
 ## Use with PC/SC support
 
 See [../../jcardsim-cli-pcsc/README.md](../../jcardsim-cli-pcsc/README.md).
-
-## Use GlobalPlatformPro with a simulator?
-
-Unfortunately, using GlobalPlatformPro (`gp`) won't wort directly, because jCardSim
-does not have the GlobalPlatform Manager applet installed.
-
-They do offer their extension [jCardSim GP](https://jcardsim.org/blogs/jcardsim-gp-global-platform-module-jcardsim)
-which does exactly that, but it is not open source and they charge a whopping 4.378,85 EUR for it.
