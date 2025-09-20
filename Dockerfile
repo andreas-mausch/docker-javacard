@@ -25,6 +25,7 @@ RUN apt-get update && \
     python3-pykcs11 \
     python3-pyscard \
     python3-virtualsmartcard \
+    vsmartcard-vpcd \
     curl \
     git \
     unzip \
