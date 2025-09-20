@@ -40,8 +40,8 @@ establish_context
 card_connect
 select -AID A000000151000000
 get_key_information_templates -noStop
-open_sc -security 3 -keyind 0 -keyver 0 -mac_key 404142434445464748494a4b4c4d4e4f -enc_key 404142434445464748494a4b4c4d4e4f -kek_key 404142434445464748494a4b4c4d4e4f
-put_sc_key -keyver 1 -newkeyver 1 -mac_key 712D973008D5D57C5D22B3167D86EEF9 -enc_key C3E2493EC0537F35E883BD9861216EFB -kek_key 24E0F23524D6F961C6439F60EF51DF9D
+open_sc -security 3 -keyind 0 -keyver 0 -enc_key 404142434445464748494a4b4c4d4e4f -mac_key 404142434445464748494a4b4c4d4e4f -kek_key 404142434445464748494a4b4c4d4e4f
+put_sc_key -keyver 1 -newkeyver 1 -enc_key C3E2493EC0537F35E883BD9861216EFB -mac_key 712D973008D5D57C5D22B3167D86EEF9 -kek_key 24E0F23524D6F961C6439F60EF51DF9D
 card_disconnect
 release_context
 ```
@@ -56,7 +56,7 @@ After running this and re-connecting the card, I was able to use the new keys:
 
 ```bash
 unset GP_KEY GP_KEY_ENC GP_KEY_MAC GP_KEY_DEK
-gp --verbose --debug --key-mac=712D973008D5D57C5D22B3167D86EEF9 --key-enc=C3E2493EC0537F35E883BD9861216EFB --key-dek=24E0F23524D6F961C6439F60EF51DF9D --list
+gp --verbose --debug --key-enc=C3E2493EC0537F35E883BD9861216EFB --key-mac=712D973008D5D57C5D22B3167D86EEF9 --key-dek=24E0F23524D6F961C6439F60EF51DF9D --list
 ```
 
 ## Personalization
@@ -67,7 +67,7 @@ Check this:
 For example:
 
 ```bash
-gp --verbose --debug --key-mac=712D973008D5D57C5D22B3167D86EEF9 --key-enc=C3E2493EC0537F35E883BD9861216EFB --key-dek=24E0F23524D6F961C6439F60EF51DF9D --set-pre-perso 1111111111111111 --set-perso 2222222222222222 --today
+gp --verbose --debug --key-enc=C3E2493EC0537F35E883BD9861216EFB --key-mac=712D973008D5D57C5D22B3167D86EEF9 --key-dek=24E0F23524D6F961C6439F60EF51DF9D --set-pre-perso 1111111111111111 --set-perso 2222222222222222 --today
 ```
 
 **Warning**:
@@ -80,13 +80,13 @@ On some cards this can only be done ONCE!
 ### From OP_READY -> INITIALIZED
 
 ```bash
-gp --verbose --debug --key-mac=712D973008D5D57C5D22B3167D86EEF9 --key-enc=C3E2493EC0537F35E883BD9861216EFB --key-dek=24E0F23524D6F961C6439F60EF51DF9D --initialize-card
+gp --verbose --debug --key-enc=C3E2493EC0537F35E883BD9861216EFB --key-mac=712D973008D5D57C5D22B3167D86EEF9 --key-dek=24E0F23524D6F961C6439F60EF51DF9D --initialize-card
 ```
 
 ### From INITIALIZED -> SECURED
 
 ```bash
-gp --verbose --debug --key-mac=712D973008D5D57C5D22B3167D86EEF9 --key-enc=C3E2493EC0537F35E883BD9861216EFB --key-dek=24E0F23524D6F961C6439F60EF51DF9D --secure-card
+gp --verbose --debug --key-enc=C3E2493EC0537F35E883BD9861216EFB --key-mac=712D973008D5D57C5D22B3167D86EEF9 --key-dek=24E0F23524D6F961C6439F60EF51DF9D --secure-card
 ```
 
 ## Tipps

@@ -20,7 +20,7 @@ establish_context
 card_connect
 select -AID A000000151000000
 get_key_information_templates -noStop
-open_sc -security 3 -keyind 0 -keyver 0 -mac_key 404142434445464748494a4b4c4d4e4f -enc_key 404142434445464748494a4b4c4d4e4f
+open_sc -security 3 -keyind 0 -keyver 0 -enc_key 404142434445464748494a4b4c4d4e4f -mac_key 404142434445464748494a4b4c4d4e4f -kek_key 404142434445464748494a4b4c4d4e4f
 
 # List packages
 get_status -element 20 -noStop
