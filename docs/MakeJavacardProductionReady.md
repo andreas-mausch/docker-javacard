@@ -52,6 +52,9 @@ Note the `dek` is named `kek` here, ChatGPT says:
 > However, some tools or documentation (like certain hardware vendor docs) may refer to DEK as KEK (Key Encryption Key).
 > They mean the same thing in this context.
 
+> DEK is a more generic term than KEK (Key Encryption Key). I can be used for any data that needs to be kept confidential separate from the transport channel.
+> -- <https://stackoverflow.com/questions/26192936/authentication-keys-in-smart-cards/26193275#26193275>
+
 After running this and re-connecting the card, I was able to use the new keys:
 
 ```bash
