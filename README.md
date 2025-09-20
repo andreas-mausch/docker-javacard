@@ -162,6 +162,5 @@ See here: [./docs/FavoriteApplets.md](./docs/FavoriteApplets.md).
 
 # TODO
 
-- Use key derivation (kdf3) instead of fixed keys (so each card has unique keys)
-- Script files for gpshell for common, re-testable tasks (test SCP03, set new derivation keys and so on)
+- Script files for gpshell for common, re-testable tasks (test SCP03, set new keys, ..)
 - `pcsc_ndef --reader='Alcor Link AK9567 00 00' --wait=3 --type=4 getmax` doesn't work yet (`No tag found`)
