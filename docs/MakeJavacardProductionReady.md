@@ -24,7 +24,8 @@ establish_context
 card_connect
 select -AID A000000151000000
 get_key_information_templates -noStop
-open_sc -security 3 -keyind 0 -keyver 0 -enc_key 404142434445464748494a4b4c4d4e4f -mac_key 404142434445464748494a4b4c4d4e4f -kek_key 404142434445464748494a4b4c4d4e4f
+open_sc -scp 3 -keyind 0 -keyver 0 -enc_key 404142434445464748494a4b4c4d4e4f -mac_key 404142434445464748494a4b4c4d4e4f -kek_key 404142434445464748494a4b4c4d4e4f
+# Replace existing key (type 0x80 = 3DES used for SCP02)
 put_sc_key -keyType 80 -keyver 1 -newkeyver 1 -enc_key C3E2493EC0537F35E883BD9861216EFB -mac_key 712D973008D5D57C5D22B3167D86EEF9 -kek_key 24E0F23524D6F961C6439F60EF51DF9D
 card_disconnect
 release_context
@@ -51,6 +52,22 @@ After running this and re-connecting the card, I was able to use the new keys:
 ```bash
 unset GP_KEY GP_KEY_ENC GP_KEY_MAC GP_KEY_DEK
 gp --verbose --debug --key-enc=C3E2493EC0537F35E883BD9861216EFB --key-mac=712D973008D5D57C5D22B3167D86EEF9 --key-dek=24E0F23524D6F961C6439F60EF51DF9D --list
+```
+
+### keyType 0x88 for RSA SCP03 keys
+
+The `-keyType` can be 0x80 and 0x88 (and possibly other values, too).
+I have [found this](https://github.com/kaoh/globalplatform/blob/2.4.2/globalplatform/src/globalplatform/security.h#L173
+)
+in the implementation of globalplatform / gpshell:
+
+```c
+#define GP211_KEY_TYPE_AES 0x88 //!<'88' AES (16, 24, or 32 long keys)
+```
+
+```
+# Add additional new key (type 0x88 = RSA for SCP03)
+put_sc_key -keyType 88 -keyver 0 -newkeyver 2 -enc_key 404142434445464748494a4b4c4d4e4f -mac_key 404142434445464748494a4b4c4d4e4f -kek_key 404142434445464748494a4b4c4d4e4f
 ```
 
 ### For first initialization: gp
