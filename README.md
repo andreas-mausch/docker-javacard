@@ -45,6 +45,10 @@ There are different tools to interact with JavaCards.
   [./docs/tools/jcardsim-cli.md](./docs/tools/jcardsim-cli.md)  
   a library which simulates a JavaCard.
   Can be used either in unit tests or as a stand-alone CLI tool.
+- **Oracle JavaCard Simulator**  
+  [./docs/tools/OracleJavaCardSimulator.md](./docs/tools/OracleJavaCardSimulator.md)  
+  a simulator which supports PC/SC and basic GlobalPlatform commands.
+  Can be used to install a .cap file and behaves like a real JavaCard.
 - **GPShell**  
   [./docs/tools/gpshell.md](./docs/tools/gpshell.md)  
   a tool based on the C/C++ library GlobalPlatform,
@@ -140,10 +144,6 @@ gp --key=404142434445464748494A4B4C4D4E4F --install ./my_applet.cap
 You can specify the `--default` option to make it the default applet.
 Some applets might require `--params` to be configured at installation time.
 You might want to use `--create` to define a custom AID.
-
-# Use the Oracle JavaCard Simulator
-
-See here: [./docs/OracleJavaCardSimulator.md](./docs/OracleJavaCardSimulator.md).
 
 # Make a JavaCard production ready
 

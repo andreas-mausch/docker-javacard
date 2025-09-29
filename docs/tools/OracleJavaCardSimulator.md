@@ -45,6 +45,9 @@ Or, you can also test this `gp` command:
 gp --key-enc=404142434445464748494A4B4C4D4E4F --key-mac=404142434445464748494A4B4C4D4E4F --key-dek=404142434445464748494A4B4C4D4E4F --list
 ```
 
+And what is very special about this simulator compared to `jCardSim`:
+You can run `gp --install` commands on it with real `.cap` files.
+
 # Notes
 
 We use the port `9025` to communicate with the simulator.
