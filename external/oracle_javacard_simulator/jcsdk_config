@@ -1,0 +1,6 @@
+# Configuration example of two readers to interact with the
+# Oracle PCSC Reader for Linux
+
+FRIENDLYNAME "Oracle JCSDK PCSC Reader Demo 1"
+DEVICENAME 127.0.0.1:9025
+LIBPATH /opt/javacard/simulator/drivers/IFDHandler/libjcsdkifdh.so

@@ -4,3 +4,5 @@ examples/gradle/helloworld/build/
 examples/gradle/helloworld/.gradle/
 examples/gradle/helloworld/.settings/
 examples/gradle/helloworld/.project
+
+external/oracle_javacard_simulator/java_card_devkit_simulator*.tar.gz

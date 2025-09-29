@@ -9,6 +9,13 @@
 # Latest gp.jar requires Java 11
 FROM eclipse-temurin:11.0.27_6-jdk
 
+# I cannot include the JavaCard DevKit Simulator in this repo,
+# that is why this is disabled by default.
+# If you want to enable it, download the simulator and build the
+# docker image with the flag enabled.
+ARG JAVACARD_SIMULATOR
+# ARG JAVACARD_SIMULATOR="java_card_devkit_simulator-linux-bin-v25.0-b_474-23-APR-2025.tar.gz"
+
 RUN apt-get update && \
   apt-get install -y \
     ant \
@@ -29,7 +36,10 @@ RUN apt-get update && \
     curl \
     git \
     unzip \
-    bash && \
+    bash \
+    # gcc-multilib is required to run 32-bit executables like the
+    # Oracle JavaCard Simulator jcsl
+    gcc-multilib && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
@@ -68,6 +78,20 @@ ENV GP_KEY_DEK=""
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY ./external /javacard
 RUN echo 'alias gp="java -jar /javacard/gp-v24.10.15.jar"' >> ~/.bashrc
+
+# JavaCard simulator
+RUN if [ -n "$JAVACARD_SIMULATOR" ] ; then \
+  cp /javacard/oracle_javacard_simulator/jcsdk_config /etc/reader.conf.d/ \
+  && mkdir -p /opt/javacard/simulator/ \
+  && tar -xzf "/javacard/oracle_javacard_simulator/$JAVACARD_SIMULATOR" -C /opt/javacard/simulator/ \
+  && java -jar /opt/javacard/simulator/tools/Configurator.jar \
+    -binary /opt/javacard/simulator/runtime/bin/jcsl \
+    -SCP-keyset 10 \
+      1111111111111111111111111111111111111111111111111111111111111111 \
+      2222222222222222222222222222222222222222222222222222222222222222 \
+      3333333333333333333333333333333333333333333333333333333333333333 \
+    -global-pin 01020304050f 03 \
+  ; fi
 
 WORKDIR /applet
 

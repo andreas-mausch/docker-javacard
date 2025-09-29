@@ -141,6 +141,10 @@ You can specify the `--default` option to make it the default applet.
 Some applets might require `--params` to be configured at installation time.
 You might want to use `--create` to define a custom AID.
 
+# Use the Oracle JavaCard Simulator
+
+See here: [./docs/OracleJavaCardSimulator.md](./docs/OracleJavaCardSimulator.md).
+
 # Make a JavaCard production ready
 
 See here: [./docs/MakeJavacardProductionReady.md](./docs/MakeJavacardProductionReady.md).
