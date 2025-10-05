@@ -22,10 +22,14 @@ jobs:
     - name: "Build Example: Gradle"
       run: |
         docker run --rm --volume ./examples/gradle/helloworld:/applet docker-javacard gradle clean buildJavaCard test
+    - name: Rename artifact files
+      run: |
+        mkdir ./artifacts/cap-files
+        mv ./examples/ant/helloworld/build/helloworld.cap ./artifacts/cap-files/helloworld-ant.cap
+        mv ./examples/gradle/helloworld/build/javacard/applet.cap ./artifacts/cap-files/helloworld-gradle.cap
     - name: Upload .cap files (JavaCard applets)
       uses: actions/upload-artifact@v4
       with:
         name: cap-files
         path: |
-          examples/ant/helloworld/build/helloworld.cap
-          examples/gradle/helloworld/build/javacard/applet.cap
+          ./artifacts/cap-files/
