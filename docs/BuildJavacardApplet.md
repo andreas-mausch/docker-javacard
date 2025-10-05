@@ -1,3 +1,14 @@
+I strongly suggest to use the Maven variant,
+but it is just to my personal preference.
+
+# Maven
+
+```bash
+JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 mvn clean verify
+```
+
+This will output the file `./target/generated-jcdk/helloworld/javacard/helloworld.cap`.
+
 # ant
 
 Commands are `ant test` and `ant applet`.

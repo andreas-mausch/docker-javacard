@@ -22,15 +22,20 @@ jobs:
     - name: "Build Example: Gradle"
       run: |
         docker run --rm --env JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 --volume ./examples/gradle/helloworld:/applet docker-javacard gradle clean buildJavaCard test
+    - name: "Build Example: Maven"
+      run: |
+        docker run --rm --env JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 --volume ./examples/maven/helloworld:/applet docker-javacard mvn --no-transfer-progress clean verify
     - name: Change file ownership
       run: |
         sudo chown -R runner:runner ./examples/ant/helloworld/build/
         sudo chown -R runner:runner ./examples/gradle/helloworld/build/
+        sudo chown -R runner:runner ./examples/maven/helloworld/target/
     - name: Rename artifact files
       run: |
         mkdir -p ./artifacts/cap-files
         mv ./examples/ant/helloworld/build/helloworld.cap ./artifacts/cap-files/helloworld-ant.cap
         mv ./examples/gradle/helloworld/build/javacard/applet.cap ./artifacts/cap-files/helloworld-gradle.cap
+        mv ./examples/maven/helloworld/target/010203040506.cap ./artifacts/cap-files/helloworld-maven.cap
     - name: Upload .cap files (JavaCard applets)
       uses: actions/upload-artifact@v4
       with:
