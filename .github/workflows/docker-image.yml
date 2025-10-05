@@ -13,4 +13,4 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build Docker image
       run: |
-        docker build -t docker-javacard .
+        docker build --quiet --tag docker-javacard .
