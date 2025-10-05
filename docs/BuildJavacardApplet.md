@@ -102,7 +102,7 @@ the `.cap` and the java class to your needs.
 
 Commands are `gradle buildJavaCard` and `gradle test`.
 
-The Gradle version used is `8.14.3` and specified in the Dockerfile.
+The Gradle version used is `9.1.0` and specified in the Dockerfile.
 I explicitly do not use the Gradle wrapper because I think it is a bad concept.
 This is controversial though and you might disagree.
 

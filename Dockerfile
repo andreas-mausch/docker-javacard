@@ -63,7 +63,7 @@ RUN apt-get update && \
 
 # This image is based on Ubuntu and Gradle in Ubuntu is outdated,
 # so install Gradle in a specific version.
-RUN curl -fsSL https://services.gradle.org/distributions/gradle-8.14.3-bin.zip -o /tmp/gradle-bin.zip && \
+RUN curl -fsSL https://services.gradle.org/distributions/gradle-9.1.0-bin.zip -o /tmp/gradle-bin.zip && \
   mkdir /opt/gradle && \
   unzip -d /opt/gradle/ /tmp/gradle-bin.zip && \
   mv /opt/gradle/gradle-*.*.*/* /opt/gradle/ && \
