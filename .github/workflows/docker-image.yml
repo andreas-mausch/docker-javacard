@@ -19,9 +19,13 @@ jobs:
     - name: "Build Example: Ant"
       run: |
         docker run --rm --volume ./examples/ant/helloworld:/applet docker-javacard ant test applet
+    - name: "Build Example: Gradle"
+      run: |
+        docker run --rm --volume ./examples/gradle/helloworld:/applet docker-javacard gradle clean buildJavaCard test
     - name: Upload .cap files (JavaCard applets)
       uses: actions/upload-artifact@v4
       with:
         name: cap-files
         path: |
           examples/ant/helloworld/build/helloworld.cap
+          examples/gradle/helloworld/build/javacard/applet.cap
