@@ -5,9 +5,7 @@
 # `SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "GP_KEY") (line 47)`
 # Yes, we do set a key here, but explictly to an empty value, which is not recognized by the rule.
 
-# Debian 11 (debian:bookworm-slim) and 12 (debian:bullseye-slim) don't have support for JDK 8
-# Latest gp.jar requires Java 11
-FROM eclipse-temurin:11.0.27_6-jdk
+FROM debian:trixie-20250929-slim
 
 # I cannot include the JavaCard DevKit Simulator in this repo,
 # that is why this is disabled by default.
@@ -37,11 +35,30 @@ RUN apt-get update && \
     git \
     unzip \
     bash \
+    wget \
+    gpg \
+    apt-transport-https \
     # gcc-multilib is required to run 32-bit executables like the
     # Oracle JavaCard Simulator jcsl
     gcc-multilib && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
+
+# Add the adoptium / temurin apt repository
+# Debian 11 (debian:bookworm-slim) and 12 (debian:bullseye-slim) don't have support for JDK 8
+# Latest gp.jar requires Java 11
+RUN wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | gpg --dearmor | tee /etc/apt/trusted.gpg.d/adoptium.gpg > /dev/null \
+  && echo "deb https://packages.adoptium.net/artifactory/deb $(awk -F= '/^VERSION_CODENAME/{print$2}' /etc/os-release) main" | tee /etc/apt/sources.list.d/adoptium.list
+
+RUN apt-get update && \
+  apt-get install -y \
+    temurin-25-jdk \
+    temurin-11-jdk \
+    temurin-8-jdk \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* \
+  && update-java-alternatives --set temurin-25-jdk-amd64 \
+  && update-java-alternatives --list \
 
 # This image is based on Ubuntu and Gradle in Ubuntu is outdated,
 # so install it in a specific version.
@@ -58,9 +75,9 @@ RUN mkdir /opt/pcsc-ndef && \
   git -C /opt/pcsc-ndef checkout b4acbf975e387fca77644fdf4767c531a54f94e5 && \
   install -m 755 /opt/pcsc-ndef/pcsc_ndef.py /usr/bin/pcsc_ndef
 
-ENV JAVA_HOME=/opt/java/openjdk
+ENV JAVA_HOME=/usr/lib/jvm/temurin-25-jdk-amd64
 ENV GRADLE_HOME=/opt/gradle
-ENV PATH=$JAVA_HOME/bin:$GRADLE_HOME/bin:$PATH
+ENV PATH=$GRADLE_HOME/bin:$PATH
 
 # Environment variables for GlobalPlatformPro
 # https://github.com/martinpaljak/GlobalPlatformPro/wiki/Getting-started
