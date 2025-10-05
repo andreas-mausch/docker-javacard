@@ -7,7 +7,7 @@ Commands are `ant test` and `ant applet`.
 <summary>ant test</summary>
 
 ```shell-session
-$ docker run -it --rm -v ./examples/ant/helloworld:/applet javacard
+$ docker run -it --rm -e JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 -v ./examples/ant/helloworld:/applet javacard
 root@863d7039121e:/applet# ant test
 Buildfile: /applet/build.xml
       [get] Destination already exists (skipping): /javacard/libs/ant-javacard.jar
@@ -50,7 +50,7 @@ Total time: 1 second
 <summary>ant applet</summary>
 
 ```shell-session
-$ docker run -it --rm -v ./examples/ant/helloworld:/applet javacard
+$ docker run -it --rm -e JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 -v ./examples/ant/helloworld:/applet javacard
 root@863d7039121e:/applet# ant applet
 Buildfile: /applet/build.xml
       [get] Destination already exists (skipping): /javacard/libs/ant-javacard.jar
@@ -100,7 +100,7 @@ This is controversial though and you might disagree.
 <summary>gradle --version</summary>
 
 ```shell-session
-$ docker run -it --rm -v ./examples/gradle/helloworld:/applet javacard
+$ docker run -it --rm -e JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 -v ./examples/gradle/helloworld:/applet javacard
 root@6a37b06cb9b1:/applet# gradle --version
 
 Welcome to Gradle 8.14.3!
@@ -136,7 +136,7 @@ OS:            Linux 6.15.7-1-MANJARO amd64
 <summary>gradle clean buildJavaCard test</summary>
 
 ```shell-session
-$ docker run -it --rm -v ./examples/gradle/helloworld:/applet javacard
+$ docker run -it --rm -e JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 -v ./examples/gradle/helloworld:/applet javacard
 root@6a37b06cb9b1:/applet# gradle clean buildJavaCard test
 Starting a Gradle Daemon (subsequent builds will be faster)
 [ant:convert] [ INFO: ] Converter [v3.0.5]

@@ -18,10 +18,10 @@ jobs:
         docker build --quiet --tag docker-javacard .
     - name: "Build Example: Ant"
       run: |
-        docker run --rm --volume ./examples/ant/helloworld:/applet docker-javacard ant test applet
+        docker run --rm --env JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 --volume ./examples/ant/helloworld:/applet docker-javacard ant test applet
     - name: "Build Example: Gradle"
       run: |
-        docker run --rm --volume ./examples/gradle/helloworld:/applet docker-javacard gradle clean buildJavaCard test
+        docker run --rm --env JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 --volume ./examples/gradle/helloworld:/applet docker-javacard gradle clean buildJavaCard test
     - name: Change file ownership
       run: |
         sudo chown -R runner:runner ./examples/ant/helloworld/build/
