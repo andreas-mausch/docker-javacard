@@ -16,7 +16,7 @@ jobs:
         docker build --quiet --tag docker-javacard .
     - name: "Build Example: Ant"
       run: |
-        docker run --rm --env JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 --volume ./examples/ant/helloworld:/applet docker-javacard ant test applet
+        docker run --rm --volume ./examples/ant/helloworld:/applet docker-javacard ant test applet
     - name: Upload .cap files (JavaCard applets)
       uses: actions/upload-artifact@v4
       with:
