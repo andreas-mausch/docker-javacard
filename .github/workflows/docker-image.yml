@@ -24,7 +24,7 @@ jobs:
         docker run --rm --volume ./examples/gradle/helloworld:/applet docker-javacard gradle clean buildJavaCard test
     - name: Rename artifact files
       run: |
-        mkdir ./artifacts/cap-files
+        mkdir -p ./artifacts/cap-files
         mv ./examples/ant/helloworld/build/helloworld.cap ./artifacts/cap-files/helloworld-ant.cap
         mv ./examples/gradle/helloworld/build/javacard/applet.cap ./artifacts/cap-files/helloworld-gradle.cap
     - name: Upload .cap files (JavaCard applets)
