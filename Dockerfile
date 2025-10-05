@@ -58,7 +58,7 @@ RUN apt-get update && \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
   && update-java-alternatives --set temurin-25-jdk-amd64 \
-  && update-java-alternatives --list \
+  && update-java-alternatives --list
 
 # This image is based on Ubuntu and Gradle in Ubuntu is outdated,
 # so install it in a specific version.
