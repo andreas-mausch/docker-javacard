@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker JavaCard CI
 
 on:
   push:
@@ -11,3 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Build Docker image
+      run: |
+        docker build -t docker-javacard .
