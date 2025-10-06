@@ -1,6 +1,6 @@
 package helloworld;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import helloworld.HelloWorldApplet;
 
@@ -9,7 +9,7 @@ import java.io.ByteArrayOutputStream;
 import javax.smartcardio.CommandAPDU;
 import javax.smartcardio.ResponseAPDU;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.licel.jcardsim.bouncycastle.util.encoders.Hex;
 import com.licel.jcardsim.smartcardio.CardSimulator;
