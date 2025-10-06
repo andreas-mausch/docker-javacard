@@ -1,6 +1,6 @@
 package helloworld;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 import helloworld.HelloWorldApplet;
 
@@ -18,14 +18,12 @@ import com.licel.jcardsim.utils.AIDUtil;
 import javacard.framework.AID;
 
 public class HelloWorldAppletTest {
-    private static CardSimulator simulator;
 
+    private static CardSimulator simulator;
 
     @Test
     public void testPing() throws Exception {
-
         CardSimulator simulator = new CardSimulator();
-        System.out.println("Running on Simulator:" + simulator);
 
         // Install applet
         String PACKAGE_AID_HEX = "01020304050607";
@@ -36,16 +34,13 @@ public class HelloWorldAppletTest {
         bos.write(aid_bytes.length);
         bos.write(aid_bytes);
 
-        simulator.installApplet(aid, HelloWorldApplet.class, bos.toByteArray(),
-        (short) 0, (byte) bos.size());
+        simulator.installApplet(aid, HelloWorldApplet.class, bos.toByteArray(), (short) 0, (byte) bos.size());
         bos.close();
 
         simulator.selectApplet(aid);
         CommandAPDU apdu = new CommandAPDU(0x80, 0x00, 0, 0);
         ResponseAPDU result = simulator.transmitCommand(apdu);
-        assertEquals(result.getSW(), 0x9000);
-        assertArrayEquals(result.getData(), "Hello".getBytes());
-        System.out.println("Done");
-        assertEquals(1, 1);
+        assertThat(result.getSW()).isEqualTo(0x9000);
+        assertThat(result.getData()).isEqualTo("Hello".getBytes());
     }
 }
