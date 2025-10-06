@@ -10,6 +10,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javacard.sdk.path>/javacard/oracle_javacard_sdks/jc305u4_kit</javacard.sdk.path>
   </properties>
 
   <build>
@@ -32,7 +33,7 @@
         <artifactId>jcdk-maven-plugin</artifactId>
         <version>0.0.1</version>
         <configuration>
-          <jcdkHome>/javacard/oracle_javacard_sdks/jc305u4_kit</jcdkHome>
+          <jcdkHome>${javacard.sdk.path}</jcdkHome>
           <jcdkVersion>3.0.x</jcdkVersion>
 
           <appletClass>helloworld.HelloWorldApplet</appletClass>
@@ -72,7 +73,7 @@
       <artifactId>api-classic</artifactId>
       <version>3.0.5</version>
       <scope>system</scope>
-      <systemPath>/javacard/oracle_javacard_sdks/jc305u4_kit/lib/api_classic.jar</systemPath>
+      <systemPath>${javacard.sdk.path}/lib/api_classic.jar</systemPath>
     </dependency>
   </dependencies>
 </project>
