@@ -21,6 +21,8 @@
         <configuration>
           <source>1.2</source>
           <target>1.1</target>
+          <testSource>1.8</testSource>
+          <testTarget>1.8</testTarget>
         </configuration>
       </plugin>
 
@@ -51,18 +53,26 @@
 
   <dependencies>
     <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.klinec</groupId>
+      <artifactId>jcardsim</artifactId>
+      <version>3.0.5.11</version>
+    </dependency>
+
+    <!-- This needs to be down here, because otherwise we get a classpath order conflict with jcardsim:
+     `Invalid APDU loaded. You may have JC API in your classpath before JCardSim.` -->
+    <dependency>
       <groupId>com.oracle.javacard</groupId>
       <artifactId>api-classic</artifactId>
       <version>3.0.5</version>
       <scope>system</scope>
       <systemPath>/javacard/oracle_javacard_sdks/jc305u4_kit/lib/api_classic.jar</systemPath>
-    </dependency>
-
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>6.0.0</version>
-      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>
