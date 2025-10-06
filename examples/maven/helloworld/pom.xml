@@ -48,6 +48,7 @@
             <option>-overloadaggressively</option>
             <option>-repackageclasses ''</option>
             <option>-keep public class * extends javacard.framework.Applet { *; }</option>
+            <option>-keep class helloworld.** { *; }</option>
           </options>
         </configuration>
       </plugin>
