@@ -101,6 +101,15 @@
           <options>
             <option>-allowaccessmodification</option>
             <option>-dontwarn java.lang.Class</option>
+            <option>-dontnote javacard.framework.**</option>
+            <option>-dontnote javacard.security.**</option>
+            <option>-dontnote javacardx.apdu.**</option>
+            <option>-dontnote javacardx.biometry1toN.**</option>
+            <option>-dontnote javacardx.biometry.**</option>
+            <option>-dontnote javacardx.crypto.**</option>
+            <option>-dontnote javacardx.external.**</option>
+            <option>-dontnote javacardx.framework.**</option>
+            <option>-dontnote javacardx.security.**</option>
             <option>-overloadaggressively</option>
             <option>-repackageclasses ''</option>
             <option>-keep public class * extends javacard.framework.Applet { *; }</option>
