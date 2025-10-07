@@ -55,6 +55,7 @@
               <compilerArgs>
                 <arg>-bootclasspath</arg>
                 <arg>${javacard.sdk.path}/lib/api_classic.jar</arg>
+                <arg>-Xlint:-options</arg>
               </compilerArgs>
             </configuration>
           </execution>
