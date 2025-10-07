@@ -13,9 +13,7 @@
     <version.plugin.maven-enforcer>3.6.2</version.plugin.maven-enforcer>
     <version.plugin.maven-surefire>3.5.4</version.plugin.maven-surefire>
     <version.plugin.maven-versions>2.19.1</version.plugin.maven-versions>
-    <!-- We still use the 4.x version to be compatible with Java 1.8,
-     which is required to build for target 1.1 -->
-    <version.plugin.git-commit-id>4.9.9</version.plugin.git-commit-id>
+    <version.plugin.git-commit-id>9.0.2</version.plugin.git-commit-id>
   </properties>
 
   <build>
