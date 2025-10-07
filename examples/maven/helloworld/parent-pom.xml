@@ -10,6 +10,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <version.plugin.maven-compiler>3.14.1</version.plugin.maven-compiler>
+    <version.plugin.maven-enforcer>3.6.2</version.plugin.maven-enforcer>
     <version.plugin.maven-surefire>3.5.4</version.plugin.maven-surefire>
     <version.plugin.maven-versions>2.19.1</version.plugin.maven-versions>
   </properties>
@@ -17,6 +18,27 @@
   <build>
     <pluginManagement>
       <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>${version.plugin.maven-enforcer}</version>
+          <executions>
+            <execution>
+              <id>enforce-maven</id>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <requireMavenVersion>
+                    <version>3.6.0</version>
+                  </requireMavenVersion>
+                </rules>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
