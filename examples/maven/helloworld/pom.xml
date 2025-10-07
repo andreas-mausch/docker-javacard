@@ -99,7 +99,7 @@
         <!-- https://github.com/code2358/jcdk-maven-plugin -->
         <groupId>com.github.code2358</groupId>
         <artifactId>jcdk-maven-plugin</artifactId>
-        <version>0.0.1</version>
+        <version>0.1.0</version>
         <configuration>
           <jcdkHome>${javacard.sdk.path}</jcdkHome>
           <jcdkVersion>3.0.x</jcdkVersion>
