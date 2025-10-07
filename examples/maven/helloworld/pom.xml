@@ -101,16 +101,6 @@
           <options>
             <option>-allowaccessmodification</option>
             <option>-dontwarn java.lang.Class</option>
-            <option>-dontnote javacard.framework.**</option>
-            <option>-dontnote javacard.security.**</option>
-            <option>-dontnote javacardx.apdu.**</option>
-            <option>-dontnote javacardx.biometry1toN.**</option>
-            <option>-dontnote javacardx.biometry.**</option>
-            <option>-dontnote javacardx.crypto.**</option>
-            <option>-dontnote javacardx.external.**</option>
-            <option>-dontnote javacardx.framework.**</option>
-            <option>-dontnote javacardx.security.**</option>
-            <option>-dontnote module-info</option>
             <option>-overloadaggressively</option>
             <option>-repackageclasses ''</option>
             <option>-keep public class * extends javacard.framework.Applet { *; }</option>
@@ -165,6 +155,7 @@
       <groupId>com.klinec</groupId>
       <artifactId>jcardsim</artifactId>
       <version>${version.lib.jcardsim}</version>
+      <scope>test</scope>
     </dependency>
 
     <!-- This needs to be down here, because otherwise we get a classpath order conflict with
