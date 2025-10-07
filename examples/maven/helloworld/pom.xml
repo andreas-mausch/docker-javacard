@@ -16,7 +16,6 @@
   </parent>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <javacard.sdk.path>/javacard/oracle_javacard_sdks/jc305u4_kit</javacard.sdk.path>
   </properties>
 
