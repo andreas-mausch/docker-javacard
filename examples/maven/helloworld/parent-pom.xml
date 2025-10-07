@@ -9,9 +9,9 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <version.plugins.maven-compiler>3.14.1</version.plugins.maven-compiler>
-    <version.plugins.maven-surefire>3.5.4</version.plugins.maven-surefire>
-    <version.plugins.maven-versions>2.19.1</version.plugins.maven-versions>
+    <version.plugin.maven-compiler>3.14.1</version.plugin.maven-compiler>
+    <version.plugin.maven-surefire>3.5.4</version.plugin.maven-surefire>
+    <version.plugin.maven-versions>2.19.1</version.plugin.maven-versions>
   </properties>
 
   <build>
@@ -20,18 +20,18 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>${version.plugins.maven-compiler}</version>
+          <version>${version.plugin.maven-compiler}</version>
         </plugin>
 
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>${version.plugins.maven-surefire}</version>
+          <version>${version.plugin.maven-surefire}</version>
         </plugin>
 
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>versions-maven-plugin</artifactId>
-          <version>${version.plugins.maven-versions}</version>
+          <version>${version.plugin.maven-versions}</version>
           <configuration>
             <rulesUri>file:///${project.basedir}/version-rules.xml</rulesUri>
           </configuration>
