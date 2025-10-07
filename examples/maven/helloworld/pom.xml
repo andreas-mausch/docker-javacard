@@ -110,6 +110,7 @@
             <option>-dontnote javacardx.external.**</option>
             <option>-dontnote javacardx.framework.**</option>
             <option>-dontnote javacardx.security.**</option>
+            <option>-dontnote module-info</option>
             <option>-overloadaggressively</option>
             <option>-repackageclasses ''</option>
             <option>-keep public class * extends javacard.framework.Applet { *; }</option>
