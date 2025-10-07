@@ -17,6 +17,7 @@
 
   <properties>
     <javacard.sdk.path>/javacard/oracle_javacard_sdks/jc305u4_kit</javacard.sdk.path>
+    <java.compiler.main.path>/usr/lib/jvm/temurin-8-jdk-amd64/bin/javac</java.compiler.main.path>
   </properties>
 
   <build>
@@ -29,12 +30,33 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.2</source>
-          <target>1.1</target>
-          <testSource>1.8</testSource>
-          <testTarget>1.8</testTarget>
-        </configuration>
+        <executions>
+          <execution>
+            <id>default-compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <fork>true</fork>
+              <executable>${java.compiler.main.path}</executable>
+              <source>1.2</source>
+              <target>1.1</target>
+            </configuration>
+          </execution>
+          <execution>
+            <id>default-testCompile</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+            <configuration>
+              <fork>false</fork>
+              <source>21</source>
+              <target>21</target>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
 
       <plugin>

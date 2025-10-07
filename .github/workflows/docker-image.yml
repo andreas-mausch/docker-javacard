@@ -25,7 +25,7 @@ jobs:
         docker run --rm --env JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 --volume ./examples/gradle/helloworld:/applet docker-javacard gradle clean buildJavaCard test
     - name: "Build Example: Maven"
       run: |
-        docker run --rm --env JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 --volume .:/applet --workdir /applet/examples/maven/helloworld docker-javacard mvn --no-transfer-progress clean verify
+        docker run --rm --volume .:/applet --workdir /applet/examples/maven/helloworld docker-javacard mvn --no-transfer-progress -Djava.compiler.main.path='/usr/lib/jvm/temurin-8-jdk-amd64/bin/javac' clean verify
     - name: Change file ownership
       run: |
         sudo chown -R runner:runner ./examples/ant/helloworld/build/
