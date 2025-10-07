@@ -52,6 +52,10 @@
               <executable>${java.compiler.main.path}</executable>
               <source>1.2</source>
               <target>1.1</target>
+              <compilerArgs>
+                <arg>-bootclasspath</arg>
+                <arg>${javacard.sdk.path}/lib/api_classic.jar</arg>
+              </compilerArgs>
             </configuration>
           </execution>
           <execution>
@@ -152,7 +156,8 @@
       <version>${version.lib.jcardsim}</version>
     </dependency>
 
-    <!-- This needs to be down here, because otherwise we get a classpath order conflict with jcardsim:
+    <!-- This needs to be down here, because otherwise we get a classpath order conflict with
+    jcardsim:
      `Invalid APDU loaded. You may have JC API in your classpath before JCardSim.` -->
     <dependency>
       <groupId>com.oracle.javacard</groupId>
