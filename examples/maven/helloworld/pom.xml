@@ -21,10 +21,8 @@
 
     <version.jcdk>3.0.x</version.jcdk>
 
-    <version.lib.assertj>3.27.6</version.lib.assertj>
     <version.lib.javacard>3.0.5</version.lib.javacard>
     <version.lib.jcardsim>3.0.6.0</version.lib.jcardsim>
-    <version.lib.junit>6.0.0</version.lib.junit>
 
     <version.plugin.proguard>2.7.0</version.plugin.proguard>
     <version.plugin.jcdk>0.1.0</version.plugin.jcdk>
@@ -140,14 +138,12 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
-      <version>${version.lib.junit}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>${version.lib.assertj}</version>
       <scope>test</scope>
     </dependency>
 
