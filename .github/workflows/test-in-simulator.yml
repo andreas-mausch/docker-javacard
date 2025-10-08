@@ -19,7 +19,9 @@ jobs:
         FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
         FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
       run: |
-        wget --directory-prefix=./external/oracle_javacard_simulator/ \
+        wget \
+          --no-verbose \
+          --directory-prefix=./external/oracle_javacard_simulator/ \
           --user="${FTP_USERNAME}" --password="${FTP_PASSWORD}" \
           ftp://ftpupload.net/htdocs/download/java_card_devkit_simulator-linux-bin-v25.0-b_474-23-APR-2025.tar.gz
     - name: Build Docker image
