@@ -9,6 +9,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+    <version.lib.maven-surefire-junit5-tree-reporter>1.4.0</version.lib.maven-surefire-junit5-tree-reporter>
+
     <version.plugin.maven-compiler>3.14.1</version.plugin.maven-compiler>
     <version.plugin.maven-enforcer>3.6.2</version.plugin.maven-enforcer>
     <version.plugin.maven-surefire>3.5.4</version.plugin.maven-surefire>
@@ -52,6 +54,23 @@
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>${version.plugin.maven-surefire}</version>
+          <dependencies>
+            <dependency>
+              <groupId>me.fabriciorby</groupId>
+              <artifactId>maven-surefire-junit5-tree-reporter</artifactId>
+              <version>${version.lib.maven-surefire-junit5-tree-reporter}</version>
+            </dependency>
+          </dependencies>
+          <configuration>
+            <reportFormat>plain</reportFormat>
+            <consoleOutputReporter>
+              <disable>true</disable>
+            </consoleOutputReporter>
+            <statelessTestsetInfoReporter
+              implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter">
+              <theme>UNICODE</theme>
+            </statelessTestsetInfoReporter>
+          </configuration>
         </plugin>
 
         <plugin>
