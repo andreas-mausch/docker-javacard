@@ -37,6 +37,7 @@ jobs:
         mv ./examples/ant/helloworld/build/helloworld.cap ./artifacts/cap-files/helloworld-ant.cap
         mv ./examples/gradle/helloworld/build/javacard/applet.cap ./artifacts/cap-files/helloworld-gradle.cap
         mv ./examples/maven/helloworld/target/010203040506.cap ./artifacts/cap-files/helloworld-maven.cap
+        ls -lh ./artifacts/cap-files/
     - name: Upload .cap files (JavaCard applets)
       uses: actions/upload-artifact@v4
       with:
