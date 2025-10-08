@@ -70,5 +70,9 @@ jobs:
         name: cap-files
     - name: Run .cap file
       run: |
-        docker run --rm --volume ./helloworld-maven.cap:/applet/helloworld-maven.cap --env START_JAVACARD_SIMULATOR=y docker-javacard \
-          bash -c 'gp() { java -jar /javacard/gp-v24.10.15.jar "$@"; } && unset GP_KEY GP_KEY_ENC GP_KEY_MAC GP_KEY_DEK && gp --install /applet/helloworld-maven.cap && gpshell ./hello.gpshell'
+        docker run --rm \
+          --volume ./helloworld-maven.cap:/applet/helloworld-maven.cap \
+          --volume ./examples/maven/helloworld/hello.gpshell:/applet/hello.gpshell \
+          --env START_JAVACARD_SIMULATOR=y \
+          docker-javacard \
+          bash -c 'gp() { java -jar /javacard/gp-v24.10.15.jar "$@"; } && unset GP_KEY GP_KEY_ENC GP_KEY_MAC GP_KEY_DEK && gp --install ./helloworld-maven.cap && gpshell ./hello.gpshell'
