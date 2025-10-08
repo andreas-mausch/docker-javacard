@@ -33,4 +33,4 @@ jobs:
         sudo chown -R runner:runner ./examples/maven/helloworld/target/
     - name: Run .cap file
       run: |
-        docker run -it --rm --volume ./examples/maven/helloworld:/applet --env START_JAVACARD_SIMULATOR=y docker-javacard bash -c 'gp() { java -jar /javacard/gp-v24.10.15.jar "$@"; } && unset GP_KEY GP_KEY_ENC GP_KEY_MAC GP_KEY_DEK && gp --install ./target/010203040506.cap && gpshell ./hello.gpshell'
+        docker run --rm --volume ./examples/maven/helloworld:/applet --env START_JAVACARD_SIMULATOR=y docker-javacard bash -c 'gp() { java -jar /javacard/gp-v24.10.15.jar "$@"; } && unset GP_KEY GP_KEY_ENC GP_KEY_MAC GP_KEY_DEK && gp --install ./target/010203040506.cap && gpshell ./hello.gpshell'
