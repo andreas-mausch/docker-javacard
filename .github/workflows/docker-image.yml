@@ -67,8 +67,7 @@ jobs:
         docker build --quiet --build-arg JAVACARD_SIMULATOR="java_card_devkit_simulator-linux-bin-v25.0-b_474-23-APR-2025.tar.gz" --tag docker-javacard .
     - uses: actions/download-artifact@v4
       with:
-        name: ./helloworld-maven.cap
-        path: ./artifacts/cap-files/helloworld-maven.cap
+        name: cap-files
     - name: Run .cap file
       run: |
         docker run --rm --volume ./helloworld-maven.cap:/applet/helloworld-maven.cap --env START_JAVACARD_SIMULATOR=y docker-javacard \
