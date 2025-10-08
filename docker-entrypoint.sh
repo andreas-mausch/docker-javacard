@@ -11,9 +11,14 @@ pcscd --disable-polkit
 # Run the Oracle JavaCard Simulator, if present
 if [ -f /opt/javacard/simulator/runtime/bin/jcsl ] && [ -n "$START_JAVACARD_SIMULATOR" ]; then
   LD_LIBRARY_PATH=/opt/javacard/simulator/runtime/bin/ /opt/javacard/simulator/runtime/bin/jcsl -p=9025 -log_level=finest 2>&1 > /var/log/jcsl.log &
-  # I know a sleep is bad here, but I don't know a better way
-  # to wait for the simulator to connect to PC/SC.
-  sleep 2
+
+  # run until at least one card is found
+  while :; do
+    if pcsc_scan -c | grep -qiE 'card present|card inserted|card state:.*present|atr:'; then
+      break
+    fi
+    sleep 0.5
+  done
 fi
 
 exec "$@"
