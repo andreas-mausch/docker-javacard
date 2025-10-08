@@ -13,10 +13,7 @@ if [ -f /opt/javacard/simulator/runtime/bin/jcsl ] && [ -n "$START_JAVACARD_SIMU
   LD_LIBRARY_PATH=/opt/javacard/simulator/runtime/bin/ /opt/javacard/simulator/runtime/bin/jcsl -p=9025 -log_level=finest 2>&1 > /var/log/jcsl.log &
 
   # run until at least one card is found
-  while :; do
-    if pcsc_scan -c | grep -qiE 'card present|card inserted|card state:.*present|atr:'; then
-      break
-    fi
+  while ! pcsc_scan -c | grep -qiE 'card present|card inserted|card state:.*present|atr:'; do
     sleep 0.5
   done
 fi
