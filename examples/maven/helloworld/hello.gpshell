@@ -1,0 +1,6 @@
+establish_context
+enable_trace
+card_connect
+select -AID 010203040506
+# Call the "Hello World" instruction (INS)
+send_apdu -sc 0 -APDU 8000000000
