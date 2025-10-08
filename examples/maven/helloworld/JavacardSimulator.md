@@ -31,5 +31,5 @@ send_APDU() returns 0x80209000 (Success)
 Or, all in one command:
 
 ```bash
-docker run -it --rm --volume ./examples/maven/helloworld:/applet -e START_JAVACARD_SIMULATOR=y javacard bash -c 'gp() { java -jar /javacard/gp-v24.10.15.jar "$@"; } && unset GP_KEY GP_KEY_ENC GP_KEY_MAC GP_KEY_DEK && gp --install ./target/010203040506.cap && gpshell ./hello.gpshell'
+docker run -it --rm --volume ./examples/maven/helloworld:/applet --env START_JAVACARD_SIMULATOR=y javacard bash -c 'gp() { java -jar /javacard/gp-v24.10.15.jar "$@"; } && unset GP_KEY GP_KEY_ENC GP_KEY_MAC GP_KEY_DEK && gp --install ./target/010203040506.cap && gpshell ./hello.gpshell'
 ```
