@@ -45,6 +45,7 @@ jobs:
         path: |
           ./artifacts/cap-files/
   run-in-simulator:
+    needs: build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
