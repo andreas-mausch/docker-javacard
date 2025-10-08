@@ -7,13 +7,6 @@
 
 FROM debian:trixie-20250929-slim
 
-# I cannot include the JavaCard DevKit Simulator in this repo,
-# that is why this is disabled by default.
-# If you want to enable it, download the simulator and build the
-# docker image with the flag enabled.
-ARG JAVACARD_SIMULATOR
-# ARG JAVACARD_SIMULATOR="java_card_devkit_simulator-linux-bin-v25.0-b_474-23-APR-2025.tar.gz"
-
 RUN apt-get update && \
   apt-get install -y \
     ant \
@@ -96,6 +89,13 @@ ENV GP_KEY_DEK=""
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY ./external /javacard
 RUN echo 'alias gp="java -jar /javacard/gp-v24.10.15.jar"' >> ~/.bashrc
+
+# I cannot include the JavaCard DevKit Simulator in this repo,
+# that is why this is disabled by default.
+# If you want to enable it, download the simulator and build the
+# docker image with the flag enabled.
+ARG JAVACARD_SIMULATOR
+# ARG JAVACARD_SIMULATOR="java_card_devkit_simulator-linux-bin-v25.0-b_474-23-APR-2025.tar.gz"
 
 # JavaCard simulator
 RUN if [ -n "$JAVACARD_SIMULATOR" ] ; then \
