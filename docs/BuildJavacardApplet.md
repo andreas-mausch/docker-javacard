@@ -9,7 +9,10 @@ instead of a config which is a program itself (like for Gradle).
 It also features newer dependency versions and better tests,
 like using AssertJ for fluent assertions.
 
-What I really dislike about Maven though is that if you forget to specify
+I have also included [ProGuard](https://www.guardsquare.com/proguard) to the
+build to reduce the size of the `.cap` file.
+
+What I really dislike though about Maven though is that if you forget to specify
 the version number for the default build plugins like `maven-surefire-plugin`,
 your build might break with no hint about why. And only after you explicitly set
 the plugin version, it works.
