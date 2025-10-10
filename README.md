@@ -151,7 +151,7 @@ See here: [./docs/MakeJavacardProductionReady.md](./docs/MakeJavacardProductionR
 
 # My favorite applets
 
-See here: [./docs/FavoriteApplets.md](./docs/FavoriteApplets.md).
+See here: [./docs/favorite-applets/README.md](./docs/favorite-applets/README.md).
 
 # Sources
 
