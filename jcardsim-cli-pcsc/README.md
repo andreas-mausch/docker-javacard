@@ -36,6 +36,10 @@ I couldn't find a way to avoid the `CREATE APPLET` instruction inside the file.
 It is the only command in the file which cannot be run on a real JavaCard,
 but it is required for jCardSim to work.
 
+# Configuration file
+
+Check `/etc/reader.conf.d/vpcd`.
+
 # Use GlobalPlatformPro with a simulator?
 
 Unfortunately, using GlobalPlatformPro (`gp`) won't wort directly, because jCardSim
