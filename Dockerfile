@@ -34,7 +34,12 @@ RUN apt-get update && \
     apt-transport-https \
     # gcc-multilib is required to run 32-bit executables like the
     # Oracle JavaCard Simulator jcsl
-    gcc-multilib && \
+    gcc-multilib \
+    # gnutls-bin contains p11tool
+    gnutls-bin \
+    pkcs11-provider \
+    libengine-pkcs11-openssl \
+    yubico-piv-tool && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 

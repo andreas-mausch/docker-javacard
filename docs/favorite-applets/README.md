@@ -9,3 +9,4 @@ Here is a list of my personal favorite applets I like to use.
 - [SmartPGP](./SmartPGP.md)
 - [NDEF](./NDEF.md)
 - [TOTP](./TOTP.md)
+- [PivApplet](./PivApplet.md)
