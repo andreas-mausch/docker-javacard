@@ -39,9 +39,15 @@ RUN apt-get update && \
     gnutls-bin \
     pkcs11-provider \
     libengine-pkcs11-openssl \
-    yubico-piv-tool && \
+    yubico-piv-tool \
+    pipx \
+    usbutils \
+    fido2-tools && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
+
+# FIDO2: USB-HID to PC/SC bridge
+RUN pipx install git+https://github.com/BryanJacobs/fido2-hid-bridge
 
 # Add the adoptium / temurin apt repository
 # Debian 11 (debian:bookworm-slim) and 12 (debian:bullseye-slim) don't have support for JDK 8
@@ -76,7 +82,7 @@ RUN mkdir /opt/pcsc-ndef && \
 
 ENV JAVA_HOME=/usr/lib/jvm/temurin-25-jdk-amd64
 ENV GRADLE_HOME=/opt/gradle
-ENV PATH=$GRADLE_HOME/bin:$PATH
+ENV PATH=$GRADLE_HOME/bin:/root/.local/bin:$PATH
 
 # Environment variables for GlobalPlatformPro
 # https://github.com/martinpaljak/GlobalPlatformPro/wiki/Getting-started
