@@ -7,6 +7,9 @@ The original had three docker images:
 One for ant, one for gradle and one for usb access.
 I have combined them into a single image.
 
+I am not an expert on JavaCards, so please treat all the information here with caution.
+Especially the *Make a JavaCard production ready* part.
+
 > # docker + javacard = why ?!
 > 
 > Why you ask? Well I don't know either.
@@ -25,14 +28,53 @@ I have combined them into a single image.
 > 
 > Just map the applet into `/applet` and run your tests.
 
+# What is inside this repository
+
+- Docker image for JavaCard development
+  - Tools to work with JavaCards
+    - GlobalPlatformPro
+    - gpshell
+    - opensc-tool
+    - scriptor
+    - yubico-piv-tool
+    - fido2-hid-bridge
+  - PC/SC support
+    - Daemon
+    - pcsc_scan
+    - pcsc_ndef
+  - PKCS#11 support
+  - Java with all required JDKs
+  - Build tools
+    - Maven
+    - Gradle
+    - Ant
+  - Simulators
+    - vsmartcard
+    - jCardSim [in CLI mode](./docs/tools/jcardsim-cli.md)
+    - Oracle JavaCard Simulator
+- Examples for a Hello World JavaCard applet for each build tool
+  - Maven (preferred)
+  - Gradle
+  - Ant
+- A list of my favorite applets  
+  See here: [./docs/favorite-applets/README.md](./docs/favorite-applets/README.md)
+- A guide how to secure a JavaCard  
+  See here: [./docs/MakeJavacardProductionReady.md](./docs/MakeJavacardProductionReady.md).
+
+Note: The *Oracle JavaCard Simulator* is not bundled for licensing reasons.
+
 # Tools to work with JavaCards
 
 There are different tools to interact with JavaCards.
 
-- **pcsc_scan**  
-  [./docs/tools/pcsc_scan.md](./docs/tools/pcsc_scan.md)  
-  a command-line tool that detects and displays information about smart card readers
-  and smart cards connected to a system using the PC/SC (Personal Computer/Smart Card) interface.
+- **gp.jar** / [GlobalPlatformPro](https://github.com/martinpaljak/GlobalPlatformPro)  
+  [./docs/tools/globalplatformpro.md](./docs/tools/globalplatformpro.md)  
+  A modern, Java-based CLI tool, lightweight, easier to use, and more developer-friendly.
+  Extensive CLI, but no support for script files.
+- **GPShell**  
+  [./docs/tools/gpshell.md](./docs/tools/gpshell.md)  
+  a tool based on the C/C++ library GlobalPlatform,
+  which offers low-level scripting of JavaCards via `.gpshell` script files.
 - **opensc-tool**  
   [./docs/tools/opensc-tool.md](./docs/tools/opensc-tool.md)  
   a command-line utility used to communicate with smart cards and manage
@@ -41,22 +83,10 @@ There are different tools to interact with JavaCards.
   [./docs/tools/scriptor.md](./docs/tools/scriptor.md)  
   a command-line tool used to send APDU (Application Protocol Data Unit) commands
   to smart cards via a PC/SC interface.
-- **jCardSim**  
-  [./docs/tools/jcardsim-cli.md](./docs/tools/jcardsim-cli.md)  
-  a library which simulates a JavaCard.
-  Can be used either in unit tests or as a stand-alone CLI tool.
-- **Oracle JavaCard Simulator**  
-  [./docs/tools/OracleJavaCardSimulator.md](./docs/tools/OracleJavaCardSimulator.md)  
-  a simulator which supports PC/SC and basic GlobalPlatform commands.
-  Can be used to install a .cap file and behaves like a real JavaCard.
-- **GPShell**  
-  [./docs/tools/gpshell.md](./docs/tools/gpshell.md)  
-  a tool based on the C/C++ library GlobalPlatform,
-  which offers low-level scripting of JavaCards via `.gpshell` script files.
-- **gp.jar** / [GlobalPlatformPro](https://github.com/martinpaljak/GlobalPlatformPro)  
-  [./docs/tools/globalplatformpro.md](./docs/tools/globalplatformpro.md)  
-  A modern, Java-based CLI tool, lightweight, easier to use, and more developer-friendly.
-  Extensive CLI, but no support for script files.
+- **pcsc_scan**  
+  [./docs/tools/pcsc_scan.md](./docs/tools/pcsc_scan.md)  
+  a command-line tool that detects and displays information about smart card readers
+  and smart cards connected to a system using the PC/SC (Personal Computer/Smart Card) interface.
 
 The naming is a bit confusing to me, because it is so similar.
 There is also the *GlobalPlatform Card Manager* on the JavaCard itself,
@@ -84,7 +114,7 @@ docker build -t javacard .
 # Build your own JavaCard applet (.cap file)
 
 You can build your own applet.
-Examples for ant and gradle are in the [./examples](./examples) folder.
+Examples for maven, gradle and ant are in the [./examples](./examples) folder.
 
 See [./docs/BuildJavacardApplet.md](./docs/BuildJavacardApplet.md) for details.
 
@@ -145,13 +175,32 @@ You can specify the `--default` option to make it the default applet.
 Some applets might require `--params` to be configured at installation time.
 You might want to use `--create` to define a custom AID.
 
+# Install on a Simulator
+
+There are two choices here:
+
+- **jCardSim**  
+  [./docs/tools/jcardsim-cli.md](./docs/tools/jcardsim-cli.md)  
+  a library which simulates a JavaCard.
+  Can be used either in unit tests or as a stand-alone CLI tool.
+- **Oracle JavaCard Simulator**  
+  [./docs/tools/OracleJavaCardSimulator.md](./docs/tools/OracleJavaCardSimulator.md)  
+  a simulator which supports PC/SC and basic GlobalPlatform commands.
+  Can be used to install a .cap file and behaves like a real JavaCard.
+
+You can either use jCardSim or, which I prefer, the **Oracle JavaCard Simulator**.
+
+The latter is a simulator which supports PC/SC and basic GlobalPlatform commands.
+Can be used to install a .cap file and behaves like a real JavaCard.
+This is something jCardSim can't do (at least in the free edition).
+
+So my preferred setup is to use jCardSim for unit tests, which works great there.  
+And to test a `.cap` file I have built or even a third-party file, I use
+Oracle's simulator.
+
 # Make a JavaCard production ready
 
 See here: [./docs/MakeJavacardProductionReady.md](./docs/MakeJavacardProductionReady.md).
-
-# My favorite applets
-
-See here: [./docs/favorite-applets/README.md](./docs/favorite-applets/README.md).
 
 # Sources
 

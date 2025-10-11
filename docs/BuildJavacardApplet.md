@@ -19,11 +19,8 @@ the plugin version, it works.
 
 # Maven
 
-```bash
-JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 mvn clean verify
-```
-
-This will output the file `./target/generated-jcdk/helloworld/javacard/helloworld.cap`.
+See the [../examples/maven/helloworld/README.md](../examples/maven/helloworld/README.md)
+for detailed instructions.
 
 # ant
 
