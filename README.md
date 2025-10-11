@@ -52,10 +52,13 @@ Especially the *Make a JavaCard production ready* part.
     - vsmartcard
     - jCardSim [in CLI mode](./docs/tools/jcardsim-cli.md)
     - Oracle JavaCard Simulator
-- Examples for a Hello World JavaCard applet for each build tool
+- Examples for a Hello World JavaCard applet for each build tool,
+  including unit tests using jCardSim
   - Maven (preferred)
   - Gradle
   - Ant
+- A CI (GitHub Actions) which builds all `.cap` files
+  and runs the Maven one in the Oracle JavaCard simulator to verify it works.
 - A list of my favorite applets  
   See here: [./docs/favorite-applets/README.md](./docs/favorite-applets/README.md)
 - A guide how to secure a JavaCard  
