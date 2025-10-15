@@ -82,6 +82,7 @@ RUN mkdir /opt/pcsc-ndef && \
 
 ENV JAVA_HOME=/usr/lib/jvm/temurin-25-jdk-amd64
 ENV GRADLE_HOME=/opt/gradle
+ENV MAVEN_OPTS="-Djavacard.sdk.path=/javacard/oracle_javacard_sdks/jc305u4_kit"
 ENV PATH=$GRADLE_HOME/bin:/root/.local/bin:$PATH
 
 # Environment variables for GlobalPlatformPro
