@@ -20,11 +20,15 @@ The AID is composed like this:
 <https://gnupg.org/ftp/specs/OpenPGP-smart-card-application-2.0.pdf>
 
 - RID (5 bytes): `D2 76 00 01 24`
-- Application (1 byte): `01`
+- Application / PIX (1 byte): `01`
 - Version (OpenPGP 3.4): `03 04`
 - Manufacturer (2 bytes): `AFAF`
 - Serial number (4 bytes): `12 34 56 78`
 - RFU (reserved, 2 bytes): `00 00`
+
+- RID: *Registered application provider identifier (unique identification of FSFE), ISO 7816-5*.
+- PIX: Proprietary application identifier extension
+- RFU: *Reserved for Future Use*.
 
 You can generate your own custom 4 bytes for the serial number using this command:
 
