@@ -12,7 +12,7 @@ like using AssertJ for fluent assertions.
 I have also included [ProGuard](https://www.guardsquare.com/proguard) to the
 build to reduce the size of the `.cap` file.
 
-What I really dislike though about Maven though is that if you forget to specify
+What I really dislike though about Maven is that if you forget to specify
 the version number for the default build plugins like `maven-surefire-plugin`,
 your build might break with no hint about why. And only after you explicitly set
 the plugin version, it works.
