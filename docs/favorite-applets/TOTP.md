@@ -3,6 +3,8 @@
 An applet which works great in combination with the
 Android App [Yubico Authenticator](https://www.yubico.com/products/yubico-authenticator/).
 
+F-Droid: <https://f-droid.org/packages/com.yubico.yubioath/>
+
 <https://developers.yubico.com/ykneo-oath/Releases/>
 
 <https://github.com/Yubico/ykneo-oath>
@@ -11,7 +13,7 @@ AID: `A0000005272101`
 
 The applet is in *maintenance mode*, but it works fine with the current Android app version (7.2.3).
 
-Use <https://www.token2.com/shop/page/totp-toolset> for testing.
+Use <https://www.token2.com/shop/page/totp-toolset> for generating test keys.
 
 Example secrets:
 
