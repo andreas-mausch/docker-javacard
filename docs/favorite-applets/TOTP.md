@@ -13,6 +13,31 @@ AID: `A0000005272101`
 
 The applet is in *maintenance mode*, but it works fine with the current Android app version (7.2.3).
 
+## CLI
+
+```bash
+sudo pacman -S yubikey-manager
+
+# Get reader name
+pcsc_scan
+
+ykman --reader='ACS' info
+
+# Set PIN
+ykman --reader='ACS' oath access change
+
+# List secrets
+ykman --reader='ACS' oath accounts list
+
+# Insert TOTP entry
+ykman --reader='ACS' oath accounts add --oath-type=totp -digits=6 --algorithm=sha1 --issuer=account@test.com Google
+
+# Get codes for all accounts, or set a query param as a last argument
+ykman --reader='ACS' oath accounts code [query]
+```
+
+## Testing
+
 Use <https://www.token2.com/shop/page/totp-toolset> for generating test keys.
 
 Example secrets:
