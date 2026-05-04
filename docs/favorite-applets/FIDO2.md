@@ -5,13 +5,29 @@
 FIDO2 can be used to authenticate on the internet.
 It is closely connected to *WebAuthn*.
 
+You can use it to let your browser store your Passkeys on the JavaCard.
+
+A note on security:
+FIDO2 tokens usually have a mechanism *user presence*.
+The user needs to touch the token to prove he really wants to authenticate somewhere.
+The JavaCard applet cannot do this, because there is no API to access a button on your reader.
+Therefore, the "User [is] always considered present".
+
+## Communication, PC/SC, HID bridge
+
 The JavaCard applet is available over the usual PC/SC interface.
 
-However, tools like `fido2-token` expect a USB HID interface.
+However, tools like `fido2-token` or your browser expect a USB HID interface.
 
 Therefore, you need to install a HID to PC/SC bridge.
 
-I have included <https://github.com/BryanJacobs/fido2-hid-bridge> in the Dockerfile.
+I have included <https://github.com/BryanJacobs/fido2-hid-bridge> in the Dockerfile,
+which works fine for me.
+
+The same author also has a (newer) Kotlin implementation here, which I think also does
+more than only the bridging. I haven't tried it, yet.
+
+<https://github.com/BryanJacobs/FIDOk>
 
 ## Run the docker container
 
@@ -49,18 +65,56 @@ Check the instructions if you want to get into more detail:
 
 ## Verify the device and applet can communicate
 
+Setting a PIN is required for passwordless login
+(unless the site sets `userVerification = discouraged`).
+
+`fido2-token` has a very bad CLI, which is not designed for humans.
+
+Replace **hidrawX** with your device.
+
+### Token information
+
 ```bash
+# List detected FIDO2 devices
 fido2-token -L
-fido2-token -I /dev/hidraw2
+
+# Get device information
+fido2-token -I /dev/hidrawX
 ```
 
-Replace **hidraw2** with your device.
-
-This should return something like this:
+`-L` should return something like this:
 
 ```
 /dev/hidraw2: vendor=0x9999, product=0x9999 ( FIDO2 Virtual USB Device)
 ```
+
+### PIN management
+
+```bash
+# Set a new PIN for your token (optional)
+fido2-token -S /dev/hidrawX
+
+# Change an already set PIN
+fido2-token -C /dev/hidrawX
+
+# Verify PIN
+fido2-token -V /dev/hidrawX
+```
+
+### Credential management
+
+```bash
+# List relying parties
+fido2-token -L -r /dev/hidrawX
+
+# List resident credentials for a relying party (discoverable credentials stored on the key)
+fido2-token -L -k <RELYING_PARTY_ID> /dev/hidrawX
+
+# Delete resident credential specified by id from device, where id is the credential's base64-encoded id.
+fido2-token -D -i <CREDENTIAL_ID> /dev/hidrawX
+```
+
+`-L -r` only works if a PIN is set on the device.
 
 ## Create a new credential and verify it
 
@@ -80,14 +134,14 @@ fido2-cred -M -i cred_param /dev/hidraw2 | fido2-cred -V -o cred
 
 To my surprise, it worked without entering a PIN.
 
-## Problem to list credentials
+## WebAuthn testing
 
-```bash
-fido2-token [-d] -L -r /dev/hidraw2
-```
+I like these sites:
 
-fails with `fido2-token: fido_credman_get_dev_rp: FIDO_ERR_PIN_REQUIRED`.
-I don't understand it, because the man page says I should be queries for the PIN.
+- <https://webauthn.io>
+  for a quick test
+- <https://www.webauthn.me/debugger>
+  for deep tech analysis
 
 ## CTAP? I am confused
 
@@ -96,4 +150,4 @@ My device does not show `U2F` when running `fido2-token -I /dev/hidraw2`.
 This is expected, because I have not set up any *attestation certificates*:
 <https://github.com/BryanJacobs/FIDO2Applet/blob/main/docs/certs.md>
 
-Therefore, some functionality doesn't work yet.
+Therefore, some functionality won't work.
