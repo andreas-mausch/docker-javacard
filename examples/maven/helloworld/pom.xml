@@ -79,7 +79,6 @@
     <dependency>
       <groupId>com.oracle.javacard</groupId>
       <artifactId>api-classic</artifactId>
-      <scope>system</scope>
     </dependency>
   </dependencies>
 </project>
