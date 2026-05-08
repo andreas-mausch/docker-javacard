@@ -2,8 +2,6 @@ package helloworld;
 
 import static org.assertj.core.api.Assertions.*;
 
-import helloworld.HelloWorldApplet;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
