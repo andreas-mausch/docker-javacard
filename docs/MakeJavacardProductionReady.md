@@ -1,5 +1,7 @@
 # Make a JavaCard production ready
 
+See [JavaCard GlobalPlatform States](./JavaCard-GlobalPlatform-States.md) for an overview of the card lifecycle states referenced here.
+
 ## Change keys
 
 Use this command to generate a new random key in hex format:
