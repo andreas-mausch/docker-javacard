@@ -49,11 +49,11 @@
       <plugin>
         <groupId>com.github.code2358</groupId>
         <artifactId>jcdk-maven-plugin</artifactId>
-          <configuration>
-            <appletClass>helloworld.HelloWorldApplet</appletClass>
-            <appletId>${applet.id}</appletId>
-            <appletVersion>1.0</appletVersion>
-          </configuration>
+        <configuration>
+          <appletClass>helloworld.HelloWorldApplet</appletClass>
+          <appletId>${applet.id}</appletId>
+          <appletVersion>1.0</appletVersion>
+        </configuration>
       </plugin>
 
     </plugins>
