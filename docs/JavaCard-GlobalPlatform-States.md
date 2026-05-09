@@ -9,11 +9,13 @@ Please double-check, if unsure.
 There are five states for a GlobalPlatform card.
 Please compare to the spec _GPC_CardSpecification_v2.3.1_PublicRelease_CC.pdf_ chapter 5.1.1, page 51.
 
-- `OP_READY`
-- `INITIALIZED`
-- `SECURED`
-- `CARD_LOCKED`
-- `TERMINATED`
+| State         | Description                                                                   |
+|---------------|-------------------------------------------------------------------------------|
+| `OP_READY`    | Operational and ready for personalization. Default keys active.               |
+| `INITIALIZED` | Initial setup done, some data may be populated. Not yet ready for cardholder. |
+| `SECURED`     | Normal operation. Secure channel required for sensitive operations.           |
+| `CARD_LOCKED` | Locked due to policy or failed auth. Only ISD may be selectable.              |
+| `TERMINATED`  | Irreversibly deactivated. No operations possible.                             |
 
 Note: Applets and Security Domains have their own life cycle states.
 I am not covering them here.
@@ -52,9 +54,18 @@ The Issuer Security Domain (ISD) always has these privileges. Supplementary Secu
 
 Compare to _Table 11-1: Authorized GlobalPlatform Commands per Card Life Cycle State_, page 142.
 
+Legend:
+- ✅ = allowed
+- ❌ = not allowed
+- — = not applicable (current state)
+- 🔑 = requires secure channel (keys)
+- 🆓 = no keys required
+
 | **Action**                  | **OP_READY**   | **INITIALIZED** | **SECURED** | **CARD_LOCKED** | **TERMINATED** | **Keys required?** |
 |-----------------------------|----------------|-----------------|-------------|-----------------|----------------|--------------------|
 | **Personalization (CPLC)**  | ✅ (only once!) | ❌               | ❌           | ❌               | ❌              | 🔑                 |
+| **Select Card Manager**     | ✅              | ✅               | ✅           | ✅               | ❌              | 🆓                 |
+| **Open Secure Channel**     | ✅              | ✅               | ✅           | ❌               | ❌              | 🔑                 |
 | **Change keys**             | ✅              | ✅               | ✅           | ❌               | ❌              | 🔑                 |
 | **Install applet**          | ✅              | ✅               | ✅           | ❌               | ❌              | 🔑                 |
 | **Select default applet**   | ✅              | ✅               | ✅           | ❌               | ❌              | 🆓                 |
@@ -64,8 +75,12 @@ Compare to _Table 11-1: Authorized GlobalPlatform Commands per Card Life Cycle S
 | **Switch to** `SECURED`     | ❌              | ✅               | -           | ✅               | ❌              | 🔑                 |
 | **Switch to** `CARD_LOCKED` | ❌              | ❌               | ✅           | -               | ❌              | 🔑                 |
 | **Switch to** `TERMINATED`  | ✅              | ✅               | ✅           | ✅               | -              | 🔑                 |
+| **Create Security Domain**  | ✅              | ✅               | ✅           | ❌               | ❌              | 🔑                 |
 | **Lock applet**             | ✅              | ✅               | ✅           | ❌               | ❌              | 🔑                 |
 | **Unlock applet**           | ✅              | ✅               | ✅           | ❌               | ❌              | 🔑                 |
 
 If the applet allows itself to be reset, like for example in SmartPGP you can set new keys,
 this is part of the _Use applet_ action.
+
+In `CARD_LOCKED`, basic communication (SELECT of the ISD) may still be allowed
+depending on the card implementation, but all security-sensitive operations are blocked.
