@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         fetch-depth: 0
         submodules: recursive
@@ -61,7 +61,7 @@ jobs:
         mv ./examples/maven/helloworld/target/010203040506.cap.asc ./artifacts/cap-files/helloworld-maven.cap.asc
         ls -lh ./artifacts/cap-files/
     - name: Upload .cap files (JavaCard applets)
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: cap-files
         path: |
@@ -70,7 +70,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         fetch-depth: 0
         submodules: recursive
@@ -86,7 +86,7 @@ jobs:
     - name: Build Docker image
       run: |
         docker build --quiet --build-arg JAVACARD_SIMULATOR="java_card_devkit_simulator-linux-bin-v25.0-b_474-23-APR-2025.tar.gz" --tag docker-javacard .
-    - uses: actions/download-artifact@v4
+    - uses: actions/download-artifact@v8
       with:
         name: cap-files
     - name: Run .cap file
