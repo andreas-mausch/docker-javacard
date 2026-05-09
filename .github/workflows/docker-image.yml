@@ -29,7 +29,8 @@ jobs:
       run: |
         curl -fsSL https://github.com/jpdarago/bip39key/releases/download/v1.5.2/bip39key-x86_64-unknown-linux-musl.tar.gz -o /tmp/bip39key.tar.gz
         echo "5c9e68a2eeb9456b61aadaacd5402119ab2065fa3046cdd95c93492c52038a4a  /tmp/bip39key.tar.gz" | sha256sum --check
-        tar -xzf /tmp/bip39key.tar.gz -C /usr/local/bin/ bip39key
+        tar -xzf /tmp/bip39key.tar.gz -C /usr/local/bin/
+        mv /usr/local/bin/bip39key-x86_64-unknown-linux-musl /usr/local/bin/bip39key
         echo "$OPENPGP_KEY_BIP39_MNEMONIC" | bip39key --user-id="JavaCard CI" --armor > ./maven-gpg-key.asc
         rm -f /tmp/bip39key.tar.gz
     - name: "Build Example: Maven"
