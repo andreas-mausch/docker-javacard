@@ -60,6 +60,7 @@ jobs:
           --no-verbose \
           --output-document=./external/oracle_javacard_simulator/java_card_devkit_simulator-linux-bin-v25.0-b_474-23-APR-2025.tar.gz \
           "$ORACLE_JAVACARD_SIMULATOR_URL"
+        echo "cc75856fd90ea8e2c30f3239cd70e6e259694a6679e81d0141940d8e5d083efd  ./external/oracle_javacard_simulator/java_card_devkit_simulator-linux-bin-v25.0-b_474-23-APR-2025.tar.gz" | sha256sum --check
     - name: Build Docker image
       run: |
         docker build --quiet --build-arg JAVACARD_SIMULATOR="java_card_devkit_simulator-linux-bin-v25.0-b_474-23-APR-2025.tar.gz" --tag docker-javacard .
