@@ -23,9 +23,29 @@ jobs:
     - name: "Build Example: Gradle"
       run: |
         docker run --rm --env JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 --volume ./examples/gradle/helloworld:/applet docker-javacard gradle clean buildJavaCard test
+    - name: Generate GPG signing key
+      env:
+        OPENPGP_KEY_BIP39_MNEMONIC: ${{ secrets.OPENPGP_KEY_BIP39_MNEMONIC }}
+      run: |
+        curl -fsSL https://github.com/jpdarago/bip39key/releases/download/v1.5.2/bip39key-x86_64-unknown-linux-musl.tar.gz -o /tmp/bip39key.tar.gz
+        echo "5c9e68a2eeb9456b61aadaacd5402119ab2065fa3046cdd95c93492c52038a4a  /tmp/bip39key.tar.gz" | sha256sum --check
+        tar -xzf /tmp/bip39key.tar.gz -C /usr/local/bin/ bip39key
+        echo "$OPENPGP_KEY_BIP39_MNEMONIC" | bip39key --user-id="JavaCard CI" --armor > ./maven-gpg-key.asc
+        rm -f /tmp/bip39key.tar.gz
     - name: "Build Example: Maven"
       run: |
-        docker run --rm --volume .:/applet --workdir /applet/examples/maven/helloworld docker-javacard mvn --no-transfer-progress -Djava.compiler.main.path='/usr/lib/jvm/temurin-8-jdk-amd64/bin/javac' clean verify
+        docker run --rm \
+          --volume ./maven-gpg-key.asc:/tmp/gpg-key.asc:ro \
+          --volume .:/applet \
+          --workdir /applet/examples/maven/helloworld \
+          docker-javacard \
+          bash -c '
+            gpg --batch --import /tmp/gpg-key.asc && \
+            mvn --no-transfer-progress \
+              -Djava.compiler.main.path=/usr/lib/jvm/temurin-8-jdk-amd64/bin/javac \
+              -Psign "-Dgpg.key=JavaCard CI" \
+              clean verify
+          '
     - name: Change file ownership
       run: |
         sudo chown -R runner:runner ./examples/ant/helloworld/build/
@@ -37,6 +57,7 @@ jobs:
         mv ./examples/ant/helloworld/build/helloworld.cap ./artifacts/cap-files/helloworld-ant.cap
         mv ./examples/gradle/helloworld/build/javacard/applet.cap ./artifacts/cap-files/helloworld-gradle.cap
         mv ./examples/maven/helloworld/target/010203040506.cap ./artifacts/cap-files/helloworld-maven.cap
+        mv ./examples/maven/helloworld/target/010203040506.cap.asc ./artifacts/cap-files/helloworld-maven.cap.asc
         ls -lh ./artifacts/cap-files/
     - name: Upload .cap files (JavaCard applets)
       uses: actions/upload-artifact@v4
