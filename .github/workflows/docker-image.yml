@@ -43,6 +43,10 @@ jobs:
           docker-javacard \
           bash -c '
             gpg --batch --import /tmp/gpg-key.asc && \
+            mvn install:install-file \
+              -Dfile=/applet/external/oracle_javacard_sdks/jc305u4_kit/lib/api_classic.jar \
+              -DgroupId=com.oracle.javacard -DartifactId=api-classic \
+              -Dversion=3.0.5 -Dpackaging=jar && \
             mvn --no-transfer-progress \
               -Djava.compiler.main.path=/usr/lib/jvm/temurin-8-jdk-amd64/bin/javac \
               -Psign "-Dgpg.key=JavaCard CI" \
