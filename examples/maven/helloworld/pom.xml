@@ -18,7 +18,6 @@
   <properties>
     <applet.id>01:02:03:04:05:06</applet.id>
     <applet.main.class>helloworld.HelloWorldApplet</applet.main.class>
-    <applet.version>1.0</applet.version>
   </properties>
 
   <build>
