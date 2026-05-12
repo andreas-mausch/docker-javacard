@@ -1,5 +1,6 @@
-package helloworld;
+package helloworld.integration;
 
+import helloworld.HelloWorldApplet;
 import static org.assertj.core.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
