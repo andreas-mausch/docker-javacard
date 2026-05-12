@@ -18,57 +18,29 @@
   <properties>
     <applet.id>01:02:03:04:05:06</applet.id>
     <applet.main.class>helloworld.HelloWorldApplet</applet.main.class>
+    <applet.version>1.0</applet.version>
   </properties>
 
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-      </plugin>
-
-      <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
       </plugin>
-
       <plugin>
         <groupId>io.github.git-commit-id</groupId>
         <artifactId>git-commit-id-maven-plugin</artifactId>
       </plugin>
-
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
       </plugin>
-
       <plugin>
         <groupId>io.github.svaningelgem</groupId>
         <artifactId>jacoco-console-reporter</artifactId>
       </plugin>
-
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>com.github.wvengen</groupId>
-        <artifactId>proguard-maven-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>com.github.code2358</groupId>
-        <artifactId>jcdk-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
