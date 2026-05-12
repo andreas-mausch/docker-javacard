@@ -51,6 +51,7 @@ jobs:
               -Djava.compiler.main.path=/usr/lib/jvm/temurin-8-jdk-amd64/bin/javac \
               -Psign -Dgpg.key="JavaCard CI" \
               -Plicense-check \
+              -Psbom \
               clean verify
           '
     - name: Change file ownership
@@ -67,6 +68,10 @@ jobs:
         mv ./examples/maven/helloworld/target/010203040506.cap.asc ./artifacts/cap-files/helloworld-maven.cap.asc
         mv ./javacard-openpgp-key.pub.asc ./artifacts/cap-files/
         ls -lh ./artifacts/cap-files/
+    - name: Scan for vulnerabilities
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+        grype sbom:./examples/maven/helloworld/target/bom.json --fail-on high
     - name: Upload .cap files (JavaCard applets)
       uses: actions/upload-artifact@v7
       with:
