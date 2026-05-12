@@ -72,7 +72,7 @@
         <configuration>
           <appletClass>${applet.main.class}</appletClass>
           <appletId>${applet.id}</appletId>
-          <appletVersion>1.0</appletVersion>
+          <appletVersion>${project.version}</appletVersion>
         </configuration>
       </plugin>
     </plugins>
