@@ -56,4 +56,18 @@ public class HelloWorldAppletTest {
         assertThat(result.getSW()).isEqualTo(0x9000);
         assertThat(result.getData()).isEqualTo("Hello".getBytes());
     }
+
+    @Test
+    public void testUnsupportedCLA() {
+        CommandAPDU apdu = new CommandAPDU(0x00, 0x00, 0, 0);
+        ResponseAPDU result = simulator.transmitCommand(apdu);
+        assertThat(result.getSW()).isEqualTo(0x6E00);
+    }
+
+    @Test
+    public void testUnsupportedINS() {
+        CommandAPDU apdu = new CommandAPDU(0x80, 0xFF, 0, 0);
+        ResponseAPDU result = simulator.transmitCommand(apdu);
+        assertThat(result.getSW()).isEqualTo(0x6D00);
+    }
 }
