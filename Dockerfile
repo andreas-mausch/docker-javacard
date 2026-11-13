@@ -5,7 +5,7 @@
 # `SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "GP_KEY") (line 47)`
 # Yes, we do set a key here, but explictly to an empty value, which is not recognized by the rule.
 
-FROM debian:trixie-20250929-slim
+FROM debian:trixie-20261104-slim
 
 RUN apt-get update && \
   apt-get install -y \
