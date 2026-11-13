@@ -17,6 +17,28 @@ jobs:
     - name: Build Docker image
       run: |
         docker build --quiet --tag docker-javacard .
+    - name: "Tool versions"
+      run: |
+        docker run --rm --entrypoint bash docker-javacard -c '
+          echo "ant:             $(ant -version)"
+          echo "fido2-token:     $(fido2-token -V 2>&1)"
+          echo "gpg:             $(gpg --version | head -1)"
+          echo "gradle:          $(gradle --version | sed -n "s/^Gradle //p")"
+          echo "gp:              $(java -jar /javacard/gp-*.jar --version 2>&1 | head -1)"
+          echo "java:            $(java -version 2>&1 | head -1)"
+          echo "libnfc:          $(nfc-list 2>&1 | grep "uses libnfc")"
+          echo "maven:           $(mvn --version | head -1 | sed "s/\x1b\[[0-9;]*m//g")"
+          echo "oathtool:        $(oathtool --version | head -1)"
+          echo "opensc:          $(opensc-tool --info | head -1)"
+          echo "vicc/vpcd:       $(vicc --version)"
+          echo "pcsc-lite:       $(pcscd --version | head -1)"
+          echo "pcsc-tools:      $(pcsc_scan -V | sed -n "2p")"
+          echo "pipx:            $(pipx --version)"
+          echo "yubico-piv-tool: $(yubico-piv-tool --version)"
+          echo "ykman:           $(ykman --version)"
+          # gpshell has no usable version flag on its CLI:
+          dpkg-query -W -f="\${Package} \${Version}\n" gpshell
+        '
     - name: "Build Example: Ant"
       run: |
         docker run --rm --env JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 --volume ./examples/ant/helloworld:/applet docker-javacard ant test applet
