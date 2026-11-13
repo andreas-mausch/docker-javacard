@@ -7,6 +7,8 @@ It is closely connected to *WebAuthn*.
 
 You can use it to let your browser store your Passkeys on the JavaCard.
 
+AID: `A0000006472F0001` (hardcoded in the applet)
+
 A note on security:
 FIDO2 tokens usually have a mechanism *user presence*.
 The user needs to touch the token to prove he really wants to authenticate somewhere.

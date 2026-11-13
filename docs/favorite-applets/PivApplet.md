@@ -5,7 +5,7 @@
 Can be used to store a Root CA certificate, for example.
 Can be used in conjunction with `openssl` and PKCS#11.
 
-AID: A000000308000010000100
+AID: `A000000308000010000100`
 
 Slot `0x9C` is for *Digital Signature*.
 
@@ -39,6 +39,54 @@ pkcs11-tool --list-objects
 yubico-piv-tool -r '' -a list-readers
 yubico-piv-tool -r Oracle -a status
 ```
+
+## Change PIN, PUK and management key before use
+
+> **Warning:** these factory defaults are public knowledge — treat an unchanged
+> applet as unprotected.
+
+The applet ships with the well-known PIV factory defaults. Until all three are
+changed, anyone with brief physical access can administer the applet:
+
+| Secret         | Default                                            | Retries                                            |
+|----------------|----------------------------------------------------|----------------------------------------------------|
+| PIN            | `123456`                                           | 5 (configurable, see below)                        |
+| PUK            | `12345678`                                         | 3 (configurable, see below)                        |
+| Management key | `010203040506070801020304050607080102030405060708` | none — the management key has **no retry counter** |
+
+The management key protects all admin operations, like importing or overwriting
+keys and certificates. It is 3DES in PivApplet — the AES192 code path is
+disabled at compile time — so the new key must be 48 hex characters (24 bytes).
+
+```bash
+# Generate a new random management key
+openssl rand -hex 24
+
+# Change the management key (authenticates with the current, here default, key)
+yubico-piv-tool -r Oracle -a change-mgm-key -n '<new-key-hex>'
+
+# Change PIN and PUK (interactive prompts)
+yubico-piv-tool -r Oracle -a change-pin
+yubico-piv-tool -r Oracle -a change-puk
+```
+
+After changing the management key, pass it via `-k` to every command needing
+admin access, e.g. the key import below:
+
+```bash
+yubico-piv-tool -r Oracle -k '<new-key-hex>' -s 9c -a import-key ...
+```
+
+Notes:
+
+- A blocked PIN can be unblocked with the PUK via `-a unblock-pin`.
+- The retry counts are configurable via the proprietary `SET PIN RETRIES`
+  command (`INS 0xFA`, P1 = PIN retries, P2 = PUK retries), which requires an
+  authenticated management key and a verified PIN.
+  **Caveat:** it re-creates the PIN objects and thereby resets PIN and PUK
+  back to their factory defaults!
+- If you lock yourself out completely, `yubico-piv-tool -a reset` performs a
+  factory reset of the applet. This **wipes all keys and certificates**.
 
 ## Create the Root CA certificate
 
