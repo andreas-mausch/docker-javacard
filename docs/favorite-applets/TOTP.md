@@ -47,6 +47,16 @@ ykman --reader='ACS' oath accounts add --oath-type=totp --digits=6 --algorithm=s
 ykman --reader='ACS' oath accounts code [query]
 ```
 
+Note: No YubiKey hardware and no YubiKey management applet is required for the `oath`
+commands. If the management application is missing, ykman falls back to scanning
+the known application AIDs and accepts any card that answers on the OATH AID.
+(Verified with ykneo-oath on jcardsim and ykman 5.6.1.)
+
+Note: ykman derives the transport from the card's ATR. If the high nibble of the
+second ATR byte is `F` (e.g., `3B FA …`), ykman assumes a *USB* YubiKey and aborts
+with `Failed to connect to YubiKey.` unless it also knows the USB product ID.
+Typical contact-card ATRs (`3B 8F …`) work.
+
 ## Provisioning via `otpauth://` URI
 
 Authenticator QR codes usually contain an `otpauth://` URI with the credential's

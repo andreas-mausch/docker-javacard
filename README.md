@@ -37,6 +37,7 @@ Especially the *Make a JavaCard production ready* part.
     - opensc-tool
     - scriptor
     - yubico-piv-tool
+    - ykman (YubiKey Manager CLI)
     - fido2-hid-bridge
   - PC/SC support
     - Daemon
