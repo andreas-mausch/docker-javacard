@@ -1,3 +1,31 @@
+# gpShell 3
+
+We install gpShell 3 from the upstream [release page](https://github.com/kaoh/globalplatform/releases)
+(`gpshell-3.0.0-static.deb`), because Debian's package is stuck at 2.4.0 from 2023.
+
+The DEB ships **two** binaries:
+
+- `gpshell` — the classic script interpreter chaining commands in one session
+  (our `*.gpshell` script files keep working with it).
+- `gpshell3` — a new task-oriented CLI, similar to `gp.jar`,
+  with `then` to chain commands in a single session:
+
+```shell-session
+# List apps/SDs/load files, then the key templates,
+# both inside one single secure channel
+root@container:/# gpshell3 --scp 3 --sec mac+enc+rmac \
+  --key 404142434445464748494a4b4c4d4e4f list-apps then list-keys
+```
+
+Other useful commands: `cplc`, `card-data`, `card-cap`, `install`, `delete`,
+`put-key`, `put-auth`, `status`, and `apdu` for raw APDUs.
+
+Options are verbose and explicit: `gpshell3 --help`
+(or `man gpshell3`, also online:
+<https://github.com/kaoh/globalplatform/blob/3.0.0/gpshell/src/gpshell3.1.md>).
+New features in 3.x include SCP11 (ECC) secure channels,
+Delegated Management with receipts, and DAP.
+
 # Example script
 
 I have run the following commands successfully on my own card (J3R180).
@@ -55,7 +83,7 @@ I think this should be handled more gracefully by `gpshell` though, if missed.
 
 # Other commands (not tested)
 
-<https://github.com/kaoh/globalplatform/blob/master/gpshell/src/gpshell.1.md>
+<https://github.com/kaoh/globalplatform/blob/3.0.0/gpshell/src/gpshell.1.md>
 
 ```
 # Connect to card in the reader with readerName. By default protocol is 0 = T0.

@@ -18,7 +18,6 @@ RUN apt-get update && \
     libpcsclite-dev \
     opensc \
     ca-certificates \
-    gpshell \
     python3-pip \
     python3-pykcs11 \
     python3-pyscard \
@@ -47,6 +46,15 @@ RUN apt-get update && \
     fido2-tools && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
+
+# Install gpShell 3 from upstream:
+# Debian only ships 2.4.0 (from 2023), upstream provides 3.0.0 as a "static"
+# DEB that contains both the legacy gpshell script interpreter and the new
+# task-oriented gpshell3 CLI. It links against libpcsclite (installed above).
+RUN curl -fsSL https://github.com/kaoh/globalplatform/releases/download/3.0.0/gpshell-3.0.0-static.deb -o /tmp/gpshell.deb && \
+  echo "ec1301a27b2a51f88d71e22c5e404e63569a4edfbce1e7f767dccfc458181400 /tmp/gpshell.deb" | sha256sum --check && \
+  dpkg -i /tmp/gpshell.deb && \
+  rm /tmp/gpshell.deb
 
 # FIDO2: USB-HID to PC/SC bridge
 RUN pipx install git+https://github.com/BryanJacobs/fido2-hid-bridge

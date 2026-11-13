@@ -78,8 +78,9 @@ There are different tools to interact with JavaCards.
   Extensive CLI, but no support for script files.
 - **GPShell**  
   [./docs/tools/gpshell.md](./docs/tools/gpshell.md)  
-  a tool based on the C/C++ library GlobalPlatform,
-  which offers low-level scripting of JavaCards via `.gpshell` script files.
+  a tool based on the C/C++ library GlobalPlatform.
+  Version 3 ships two variants: the classic `gpshell` script interpreter
+  for low-level `.gpshell` script files, and the new task-oriented `gpshell3` CLI.
 - **opensc-tool**  
   [./docs/tools/opensc-tool.md](./docs/tools/opensc-tool.md)  
   a command-line utility used to communicate with smart cards and manage
