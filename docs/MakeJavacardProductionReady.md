@@ -100,6 +100,32 @@ A000000151000000 locked with: 404142434445464748494A4B4C4D4E4F
 Write this down, DO NOT FORGET/LOSE IT!
 ```
 
+### Key syntax of `gp` (v25.x) — SCP03 / AES pitfalls
+
+Verified against the [GlobalPlatformPro sources](https://github.com/martinpaljak/GlobalPlatformPro)
+(`pro/javacard/gptool/Key.java`, `GPSession`) and against the Oracle simulator
+(see [OracleJavaCardSimulator.md](./tools/OracleJavaCardSimulator.md)):
+
+- `--put-key` / `--replace-key` accept a single key as:
+  - `aes:<hex>` (16, 24 or 32 bytes)
+  - `3des:<hex>` (16 bytes)
+  - a PEM file (RSA/EC public key, e.g. for DAP)
+- **For `--put-key`/`--replace-key`, bare hex is typed by length alone: 16 bytes → 3DES,
+  24/32 → AES.** For an AES-128 key the `aes:` prefix is therefore mandatory there.
+- `--lock-enc` / `--lock-mac` / `--lock-dek` take **bare hex only** (no `aes:` prefix),
+  must be given **together** (one PUT KEY command carrying the whole SCP keyset,
+  `P2=0x81`, which is what SCP03 cards expect), and the key *type* tag is derived
+  from the negotiated secure channel: an SCP03 session types even 16-byte keys as
+  AES (verified in the APDU trace: `88 11 10 ...`).
+  `--lock <hex>` instead takes a single master key value (or `default`); with SCP03
+  sessions gp may then derive ENC/MAC/DEK from it via KDF.
+- `--new-keyver`: the ranges `0x10-0x1F`, `0x20-0x2F`, `0x30-0x3F` are interpreted
+  by `gp` as scheme hints (SCP01 / SCP02 / SCP03-KDF3, see GP spec KVN conventions).
+  For plain (non-diversified) keysets use `1` .. `0x0F`.
+  The scheme is also what selects the key **type** encoding (`0x10` forces a
+  DES3/SCP01 encoding even in an SCP03 session!), producing `6A80`/`6A86` errors
+  that look like a broken card/tool.
+
 ### Key derivation
 
 `gp` supports [Key Diversification](https://github.com/martinpaljak/GlobalPlatformPro/wiki/Keys#diversification).
