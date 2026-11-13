@@ -118,7 +118,7 @@ RUN echo 'alias gp="java -jar /javacard/gp-v25.10.20.jar"' >> ~/.bashrc
 # If you want to enable it, download the simulator and build the
 # docker image with the flag enabled.
 ARG JAVACARD_SIMULATOR
-# ARG JAVACARD_SIMULATOR="java_card_devkit_simulator-linux-bin-v25.0-b_474-23-APR-2025.tar.gz"
+# ARG JAVACARD_SIMULATOR="java_card_devkit_simulator-linux-bin-v26.0-b_788-05-MAY-2026.tar.gz"
 
 # JavaCard simulator
 RUN if [ -n "$JAVACARD_SIMULATOR" ] ; then \

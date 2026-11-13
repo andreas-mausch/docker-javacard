@@ -114,12 +114,12 @@ jobs:
       run: |
         wget \
           --no-verbose \
-          --output-document=./external/oracle_javacard_simulator/java_card_devkit_simulator-linux-bin-v25.0-b_474-23-APR-2025.tar.gz \
+          --output-document=./external/oracle_javacard_simulator/java_card_devkit_simulator-linux-bin-v26.0-b_788-05-MAY-2026.tar.gz \
           "$ORACLE_JAVACARD_SIMULATOR_URL"
-        echo "cc75856fd90ea8e2c30f3239cd70e6e259694a6679e81d0141940d8e5d083efd  ./external/oracle_javacard_simulator/java_card_devkit_simulator-linux-bin-v25.0-b_474-23-APR-2025.tar.gz" | sha256sum --check
+        echo "b8b999c3e1cfac5d56f7ef16654ce28c99cf472d96761d419a03ddf11f5811c0  ./external/oracle_javacard_simulator/java_card_devkit_simulator-linux-bin-v26.0-b_788-05-MAY-2026.tar.gz" | sha256sum --check
     - name: Build Docker image
       run: |
-        docker build --quiet --build-arg JAVACARD_SIMULATOR="java_card_devkit_simulator-linux-bin-v25.0-b_474-23-APR-2025.tar.gz" --tag docker-javacard .
+        docker build --quiet --build-arg JAVACARD_SIMULATOR="java_card_devkit_simulator-linux-bin-v26.0-b_788-05-MAY-2026.tar.gz" --tag docker-javacard .
     - uses: actions/download-artifact@v8
       with:
         name: cap-files

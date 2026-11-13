@@ -23,10 +23,10 @@ It is free of cost, but you need to have an Oracle account.
 In order to use it with the included `Dockerfile`, you need to build it like this with the `JAVACARD_SIMULATOR` parameter:
 
 ```bash
-docker build --build-arg JAVACARD_SIMULATOR="java_card_devkit_simulator-linux-bin-v25.0-b_474-23-APR-2025.tar.gz" -t javacard .
+docker build --build-arg JAVACARD_SIMULATOR="java_card_devkit_simulator-linux-bin-v26.0-b_788-05-MAY-2026.tar.gz" -t javacard .
 ```
 
-`java_card_devkit_simulator-linux-bin-v25.0-b_474-23-APR-2025.tar.gz` is the filename of the simulator,
+`java_card_devkit_simulator-linux-bin-v26.0-b_788-05-MAY-2026.tar.gz` is the filename of the simulator,
 and you need to place it inside the `./external/oracle_javacard_simulator/` directory.
 
 I cannot include the binary in this repository, because it is not under a free license.
