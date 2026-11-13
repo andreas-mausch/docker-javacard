@@ -26,6 +26,9 @@ pcsc_scan
 
 ykman --reader='ACS' info
 
+# Log traffic, including AIDs
+ykman --reader='ACS' --log-level=traffic info
+
 # Set OATH password
 ykman --reader='ACS' oath access change
 
