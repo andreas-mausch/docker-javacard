@@ -103,7 +103,7 @@ ENV GP_KEY_DEK=""
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY ./external /javacard
-RUN echo 'alias gp="java -jar /javacard/gp-v24.10.15.jar"' >> ~/.bashrc
+RUN echo 'alias gp="java -jar /javacard/gp-v25.10.20.jar"' >> ~/.bashrc
 
 # I cannot include the JavaCard DevKit Simulator in this repo,
 # that is why this is disabled by default.
