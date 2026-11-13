@@ -1,5 +1,9 @@
 # TOTP with Yubico Authenticator (2FA codes)
 
+> **⚠️ Security note: the access code of this applet has *unlimited* guesses —
+> there is no retry counter, no lockout, and no KDF.
+> See [Security note: the access code has unlimited guesses](#security-note-the-access-code-has-unlimited-guesses).**
+
 An applet which works great in combination with the
 Android App [Yubico Authenticator](https://www.yubico.com/products/yubico-authenticator/).
 
@@ -158,3 +162,27 @@ oathtool --hotp --counter=0 --base32 JBSWY3DPEHPK3PXP
 These examples use a public test secret. Do not pass real secrets as command-line
 arguments: they may be exposed in shell history and process listings. Unlike
 `pass-otp`, `oathtool` does not manage an encrypted credential store.
+
+## Security note: the access code has unlimited guesses
+
+I reviewed the applet source ([YkneoOath.java](https://github.com/Yubico/ykneo-oath/blob/543b4c3907e047d4f3d851e34f1b9e50ce5832e2/applet/src/pkgYkneoOath/YkneoOath.java)),
+and the access code has **no brute-force protection at all**:
+
+- `handleValidate()` just throws `SW_WRONG_DATA` on a wrong response. No retry counter,
+  no lockout, no delay, nothing persisted. The "authenticated" flag is a transient byte
+  that is cleared on deselect — every re-selection starts a fresh guessing session.
+- The password is used as a **raw HMAC key** (no PBKDF2, no iterations), so its strength
+  is exactly its entropy.
+- A successful VALIDATE returns `HMAC(key, client_challenge)` (mutual auth). Anyone who
+  eavesdrops on one legit session captures a `(challenge, response)` pair and can brute-force
+  the password **offline**, without the card.
+- `Util.arrayCompare()` for the response check is not constant-time.
+- Without an access code, everything (`LIST`, `CALCULATE_ALL`, `PUT`, `DELETE`) is
+  unauthenticated. RESET (`INS 0x04`, `P1P2 0xDEAD`) wipes the applet without any code (DoS).
+- On our emulator setup the applet runs at host CPU speed, so online guessing via APDUs
+  is effectively an offline attack.
+
+Conclusion: the access code only protects against a shoulder-surfer at the reader, not
+against a real attacker. Use a long, random access code (128+ bits of entropy) and don't
+treat it as a security boundary. (The newer, closed-source YubiKey 5 OATH applet does
+implement a retry counter; ykneo-oath never got one and is archived.)
