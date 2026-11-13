@@ -38,6 +38,7 @@ Especially the *Make a JavaCard production ready* part.
     - scriptor
     - yubico-piv-tool
     - ykman (YubiKey Manager CLI)
+    - oathtool (generate HOTP/TOTP codes)
     - fido2-hid-bridge
   - PC/SC support
     - Daemon

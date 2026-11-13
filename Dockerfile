@@ -41,6 +41,7 @@ RUN apt-get update && \
     libengine-pkcs11-openssl \
     yubico-piv-tool \
     yubikey-manager \
+    oathtool \
     pipx \
     usbutils \
     fido2-tools && \
