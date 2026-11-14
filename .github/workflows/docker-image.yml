@@ -103,6 +103,9 @@ jobs:
   run-in-simulator:
     needs: build
     runs-on: ubuntu-latest
+    # Fail fast instead of hanging for 6 hours if something stalls
+    # (e.g., simulator startup or gp/gpshell):
+    timeout-minutes: 15
     steps:
     - uses: actions/checkout@v6
       with:
