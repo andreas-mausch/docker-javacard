@@ -128,7 +128,13 @@ jobs:
         name: cap-files
     - name: Run .cap file
       run: |
+        # The GitHub runner's AppArmor/seccomp setup denies the 32-bit
+        # jcsl simulator's socket() call ("failed to create socket").
+        # Lift both for this ephemeral simulator container on the runner;
+        # locally (without those restrictions) it works without these flags.
         docker run --rm \
+          --security-opt apparmor=unconfined \
+          --security-opt seccomp=unconfined \
           --volume ./helloworld-maven.cap:/applet/helloworld-maven.cap \
           --volume ./examples/maven/helloworld/hello.gpshell:/applet/hello.gpshell \
           --env START_JAVACARD_SIMULATOR=y \
