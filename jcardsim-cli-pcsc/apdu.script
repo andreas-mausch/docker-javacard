@@ -13,5 +13,5 @@
 
 // test hello world from card
 // This is handled here:
-// examples/gradle/helloworld/src/HelloWorldApplet.java#process()
+// https://github.com/andreas-mausch/docker-javacard/blob/example-gradle/examples/gradle/helloworld/src/HelloWorldApplet.java#process()
 0x80 0x00 0x00 0x00 0x00 0xff;

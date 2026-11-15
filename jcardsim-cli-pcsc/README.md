@@ -17,8 +17,12 @@ To test vsmartcard, you can run the CLI tool `vicc`. It will present a smartcard
 you can then see if you run `pcsc_scan`. Stop `vicc` again to continue here.
 
 ```bash
-java --class-path=../external/libs/jcardsim-3.0.5-SNAPSHOT-arekinath-vpcd.jar:../examples/gradle/helloworld/build/classes/java/main/ com.licel.jcardsim.remote.VSmartCard ./jcardsim.properties
+java --class-path=../external/libs/jcardsim-3.0.5-SNAPSHOT-arekinath-vpcd.jar:<your-applet-classes-dir>/ com.licel.jcardsim.remote.VSmartCard ./jcardsim.properties
 ```
+
+For `<your-applet-classes-dir>` use the compiled applet classes of your project,
+e.g. `build/classes/java/main` from a Gradle build like the frozen
+[`example-gradle` tag](https://github.com/andreas-mausch/docker-javacard/tree/example-gradle/examples/gradle/helloworld).
 
 Notes:
 

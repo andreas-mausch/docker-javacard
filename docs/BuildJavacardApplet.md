@@ -19,8 +19,29 @@ the plugin version, it works.
 
 # Maven
 
-See the [../examples/maven/helloworld/README.md](../examples/maven/helloworld/README.md)
-for detailed instructions.
+The Maven example moved to its own repository:
+[javacard-maven-helloworld](https://github.com/andreas-mausch/javacard-maven-helloworld/tree/384c031).
+
+See its [README](https://github.com/andreas-mausch/javacard-maven-helloworld/blob/384c031/README.md)
+for detailed instructions. The CI here builds the example at the pinned commit
+`384c031` with this image and installs the resulting `.cap` file
+into the Oracle JavaCard simulator.
+
+# ant and gradle
+
+The Ant and Gradle examples are no longer maintained and no longer tested by CI.
+They are frozen in the tags [`example-ant`](https://github.com/andreas-mausch/docker-javacard/tree/example-ant/examples/ant/helloworld)
+and [`example-gradle`](https://github.com/andreas-mausch/docker-javacard/tree/example-gradle/examples/gradle/helloworld).
+The toolchains themselves are still part of the image.
+
+Check out an example with:
+
+```bash
+git clone --depth 1 --branch example-ant https://github.com/andreas-mausch/docker-javacard.git
+# or: --branch example-gradle
+```
+
+The command outputs below are from the state of those tags and kept for reference.
 
 # ant
 
@@ -106,9 +127,9 @@ Total time: 1 second
 </details>
 
 Select your JavaCard SDK in the variables `jc.sdk` and `<javacard jckit="..">` values
-in the [./examples/ant/helloworld/build.xml](./examples/ant/helloworld/build.xml).
+in the [`build.xml` of the `example-ant` tag](https://github.com/andreas-mausch/docker-javacard/blob/example-ant/examples/ant/helloworld/build.xml).
 
-You can adjust the AID in the `examples/ant/helloworld/build.xml` for
+You can adjust the AID in the `build.xml` for
 the `.cap` and the java class to your needs.
 
 # gradle
@@ -203,6 +224,6 @@ BUILD SUCCESSFUL in 22s
 </details>
 
 Select your JavaCard SDK in the variables `JC_SELECTED` and `config.cap.targetsdk` values
-in the [./examples/gradle/helloworld/build.gradle](./examples/gradle/helloworld/build.gradle).
+in the [`build.gradle` of the `example-gradle` tag](https://github.com/andreas-mausch/docker-javacard/blob/example-gradle/examples/gradle/helloworld/build.gradle).
 
 You can adjust the AID in the `config.cap.applet.aid` for the `.cap`.

@@ -54,13 +54,10 @@ Especially the *Make a JavaCard production ready* part.
     - vsmartcard
     - jCardSim [in CLI mode](./docs/tools/jcardsim-cli.md)
     - Oracle JavaCard Simulator
-- Examples for a Hello World JavaCard applet for each build tool,
-  including unit tests using jCardSim
-  - Maven (preferred)
-  - Gradle
-  - Ant
-- A CI (GitHub Actions) which builds all `.cap` files
-  and runs the Maven one in the Oracle JavaCard simulator to verify it works.
+- A CI (GitHub Actions) which builds the Hello World applet of the
+  [javacard-maven-helloworld](https://github.com/andreas-mausch/javacard-maven-helloworld)
+  repository with this image and runs the resulting `.cap` file
+  in the Oracle JavaCard simulator to verify it works.
 - A list of my favorite applets  
   See here: [./docs/favorite-applets/README.md](./docs/favorite-applets/README.md)
 - A guide how to secure a JavaCard  
@@ -121,8 +118,13 @@ docker build -t javacard .
 
 # Build your own JavaCard applet (.cap file)
 
-You can build your own applet.
-Examples for maven, gradle and ant are in the [./examples](./examples) folder.
+The Maven Hello World example lives in its own repository:
+[javacard-maven-helloworld](https://github.com/andreas-mausch/javacard-maven-helloworld).
+
+Gradle and Ant examples are no longer maintained here; they are frozen in the
+tags [`example-gradle`](https://github.com/andreas-mausch/docker-javacard/tree/example-gradle/examples/gradle)
+and [`example-ant`](https://github.com/andreas-mausch/docker-javacard/tree/example-ant/examples/ant).
+The Gradle and Ant toolchains are still part of the image.
 
 See [./docs/BuildJavacardApplet.md](./docs/BuildJavacardApplet.md) for details.
 

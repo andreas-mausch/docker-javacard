@@ -6,14 +6,25 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  # Pinned commit (384c031) of the Maven Hello World example repository.
+  # Bump deliberately after verifying the new revision builds with this image.
+  MAVEN_HELLOWORLD_SHA: 384c03161ce52be0e67fa8f062bb2f215d07e357
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7.0.1
       with:
         fetch-depth: 0
         submodules: recursive
+    - name: Check out Maven example (pinned)
+      uses: actions/checkout@v7.0.1
+      with:
+        repository: andreas-mausch/javacard-maven-helloworld
+        ref: ${{ env.MAVEN_HELLOWORLD_SHA }}
+        path: maven-helloworld
     - name: Build Docker image
       run: |
         docker build --quiet --tag docker-javacard .
@@ -39,12 +50,6 @@ jobs:
           # gpshell has no usable version flag on its CLI:
           dpkg-query -W -f="\${Package} \${Version}\n" gpshell
         '
-    - name: "Build Example: Ant"
-      run: |
-        docker run --rm --env JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 --volume ./examples/ant/helloworld:/applet docker-javacard ant test applet
-    - name: "Build Example: Gradle"
-      run: |
-        docker run --rm --env JAVA_HOME=/usr/lib/jvm/temurin-8-jdk-amd64 --volume ./examples/gradle/helloworld:/applet docker-javacard gradle clean buildJavaCard test
     - name: Generate GPG signing key
       env:
         OPENPGP_KEY_BIP39_MNEMONIC: ${{ secrets.OPENPGP_KEY_BIP39_MNEMONIC }}
@@ -60,13 +65,12 @@ jobs:
       run: |
         docker run --rm \
           --volume ./javacard-openpgp-key.asc:/tmp/gpg-key.asc:ro \
-          --volume .:/applet \
-          --workdir /applet/examples/maven/helloworld \
+          --volume ./maven-helloworld:/applet \
           docker-javacard \
           bash -c '
             gpg --batch --import /tmp/gpg-key.asc && \
             mvn install:install-file \
-              -Dfile=/applet/external/oracle_javacard_sdks/jc305u4_kit/lib/api_classic.jar \
+              -Dfile=/javacard/oracle_javacard_sdks/jc305u4_kit/lib/api_classic.jar \
               -DgroupId=com.oracle.javacard -DartifactId=api-classic \
               -Dversion=3.0.5 -Dpackaging=jar && \
             mvn --no-transfer-progress \
@@ -78,24 +82,25 @@ jobs:
           '
     - name: Change file ownership
       run: |
-        sudo chown -R runner:runner ./examples/ant/helloworld/build/
-        sudo chown -R runner:runner ./examples/gradle/helloworld/build/
-        sudo chown -R runner:runner ./examples/maven/helloworld/target/
+        sudo chown -R runner:runner ./maven-helloworld/target/
     - name: Rename artifact files
       run: |
         mkdir -p ./artifacts/cap-files
-        mv ./examples/ant/helloworld/build/helloworld.cap ./artifacts/cap-files/helloworld-ant.cap
-        mv ./examples/gradle/helloworld/build/javacard/applet.cap ./artifacts/cap-files/helloworld-gradle.cap
-        mv ./examples/maven/helloworld/target/010203040506.cap ./artifacts/cap-files/helloworld-maven.cap
-        mv ./examples/maven/helloworld/target/010203040506.cap.asc ./artifacts/cap-files/helloworld-maven.cap.asc
+        mv ./maven-helloworld/target/010203040506.cap ./artifacts/cap-files/helloworld-maven.cap
+        mv ./maven-helloworld/target/010203040506.cap.asc ./artifacts/cap-files/helloworld-maven.cap.asc
         mv ./javacard-openpgp-key.pub.asc ./artifacts/cap-files/
         ls -lh ./artifacts/cap-files/
     - name: Scan for vulnerabilities
       run: |
         curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
-        grype sbom:./examples/maven/helloworld/target/bom.json --fail-on high
+        sboms=(./maven-helloworld/target/*.sbom.cyclonedx.json)
+        if [ "${#sboms[@]}" -ne 1 ]; then
+          echo "Expected exactly one CycloneDX SBOM, found ${#sboms[@]}" >&2
+          exit 1
+        fi
+        grype "sbom:${sboms[0]}" --fail-on high
     - name: Upload .cap files (JavaCard applets)
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@v7.0.2
       with:
         name: cap-files
         path: |
@@ -107,10 +112,16 @@ jobs:
     # (e.g., simulator startup or gp/gpshell):
     timeout-minutes: 15
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7.0.1
       with:
         fetch-depth: 0
         submodules: recursive
+    - name: Check out Maven example (pinned)
+      uses: actions/checkout@v7.0.1
+      with:
+        repository: andreas-mausch/javacard-maven-helloworld
+        ref: ${{ env.MAVEN_HELLOWORLD_SHA }}
+        path: maven-helloworld
     - name: Download Oracle JavaCard Simulator
       env:
         ORACLE_JAVACARD_SIMULATOR_URL: ${{ secrets.ORACLE_JAVACARD_SIMULATOR_URL }}
@@ -123,7 +134,7 @@ jobs:
     - name: Build Docker image
       run: |
         docker build --quiet --build-arg JAVACARD_SIMULATOR="java_card_devkit_simulator-linux-bin-v26.0-b_788-05-MAY-2026.tar.gz" --tag docker-javacard .
-    - uses: actions/download-artifact@v8
+    - uses: actions/download-artifact@v8.0.2
       with:
         name: cap-files
     - name: Run .cap file
@@ -136,7 +147,7 @@ jobs:
           --security-opt apparmor=unconfined \
           --security-opt seccomp=unconfined \
           --volume ./helloworld-maven.cap:/applet/helloworld-maven.cap \
-          --volume ./examples/maven/helloworld/hello.gpshell:/applet/hello.gpshell \
+          --volume ./maven-helloworld/hello.gpshell:/applet/hello.gpshell \
           --env START_JAVACARD_SIMULATOR=y \
           docker-javacard \
           bash -c 'gp() { java -jar /javacard/gp-v25.10.20.jar "$@"; } && unset GP_KEY GP_KEY_ENC GP_KEY_MAC GP_KEY_DEK && gp --install ./helloworld-maven.cap && gpshell ./hello.gpshell'
