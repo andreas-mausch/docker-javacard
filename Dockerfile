@@ -23,7 +23,6 @@ RUN apt-get update && \
     python3-pyscard \
     python3-virtualsmartcard \
     vsmartcard-vpcd \
-    maven \
     curl \
     git \
     unzip \
@@ -85,6 +84,15 @@ RUN curl -fsSL https://services.gradle.org/distributions/gradle-8.14.3-bin.zip -
   rmdir /opt/gradle/gradle-*.*.*/ && \
   rm /tmp/gradle-bin.zip
 
+# Debian ships an outdated Maven (3.9.9), but the javacard-parent enforcer
+# requires >= 3.9.16, so install Maven in a specific version like Gradle.
+# archive.apache.org keeps old releases, so the pinned URL stays valid.
+RUN curl -fsSL https://archive.apache.org/dist/maven/maven-3/3.9.16/binaries/apache-maven-3.9.16-bin.tar.gz -o /tmp/maven-bin.tar.gz && \
+  echo "831a8591fe20c8243b1dbe7d71e3244f31d1665b0804b2e825e38cbbe5ce0cafb8338851f90780735568773e0a6cd07bbec107cda0b896b008b861075358b6f6 /tmp/maven-bin.tar.gz" | sha512sum --check && \
+  mkdir /opt/maven && \
+  tar -xzf /tmp/maven-bin.tar.gz -C /opt/maven --strip-components=1 && \
+  rm /tmp/maven-bin.tar.gz
+
 # Install pcsc_ndef
 RUN mkdir /opt/pcsc-ndef && \
   git clone https://github.com/Giraut/pcsc-ndef /opt/pcsc-ndef && \
@@ -93,8 +101,9 @@ RUN mkdir /opt/pcsc-ndef && \
 
 ENV JAVA_HOME=/usr/lib/jvm/temurin-25-jdk-amd64
 ENV GRADLE_HOME=/opt/gradle
+ENV MAVEN_HOME=/opt/maven
 ENV MAVEN_OPTS="-Djavacard.sdk.path=/javacard/oracle_javacard_sdks/jc305u4_kit"
-ENV PATH=$GRADLE_HOME/bin:/root/.local/bin:$PATH
+ENV PATH=$GRADLE_HOME/bin:$MAVEN_HOME/bin:/root/.local/bin:$PATH
 
 # Environment variables for GlobalPlatformPro
 # https://github.com/martinpaljak/GlobalPlatformPro/wiki/Getting-started
