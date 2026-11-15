@@ -68,6 +68,59 @@ release_context
 
 # SCP02 and the OpenSSL legacy provider
 
+## Pitfall: `GET STATUS … 6A88` in `list-apps` on older cards
+
+After a successful SCP02 mutual authentication, `gpshell3 list-apps` can
+abort with
+
+```
+Error 0x80206A88: 6A88: Referenced data not found.
+GET STATUS (applications) failed
+```
+
+That is **not** a secure-channel failure: the card decoded and verified
+the wrapped command fine (a MAC error would give `6982`/`6688`/`6A86`).
+`gpshell3` enumerates via `GET STATUS [for applications]` (`P1=0x40`)
+and aborts on the first error. Older cards (GP2.1-era, e.g. JTop/JCOP
+with `OP_READY` ISD and the `A0000001515350` "SP" demo package) do not
+answer `P1=0x40` and reply `6A88`, even when the card is *not* empty.
+
+`gp.jar` is tolerant here: it queries `P1=0x80` (ISD), `0x40` (apps),
+`0x10`/`0x20` (load files, with modules), merely *warns* about failing
+element types and prints whatever the card did return — which is why
+`gp --list` shows your packages while `gpshell3 list-apps` fails.
+Verify with `gp --verbose --list` and look for the
+`GET STATUS failed … 6A88` warning.
+
+Workarounds for such cards: list with `gp --list`, use `gpshell3 apdu --auth`
+to send the GET STATUS element types you want manually
+(`P1`: `80`=ISD — carries the card lifecycle state, `40`=applications
+and Security Domains, `20`=load files, `10`=load files with modules;
+`6310` means "more" → repeat with P2 bit 0 set), or use the legacy
+`gpshell` script interpreter with `get_status -element 10/20/80 -noStop`
+(upstream even ships per-card scripts like `listJCOP10.txt`).
+
+```shell-session
+root@container:/# gpshell3 --scp 2 --kv 1 --enc <ENC> --mac <MAC> --dek <DEK> \
+    apdu --auth --nostop 80F28000024F0000,80F24000024F0000,80F21000024F0000,80F22000024F0000
+```
+
+(The four P1 values above are the only ones GP 2.1.1 defines; the
+occasionally seen `B0` is not a "global directory" — at best a GP 2.2+
+bit-combination of `80|20|10`, optional for cards.)
+
+Note: `gpshell3`'s `list-apps` has no flag to skip an element type; its
+SELECT-probe fallback only triggers on `6D00`/`6E00`/`6A81` errors, not
+on `6A88`. And beware: `gpshell3 status …` is *SET* status (can lock or
+terminate the card), not a listing command.
+What all these element types (`80`/`40`/`10`/`20`) actually stand
+for — ISD, applications, load files, modules — is explained in
+[JavaCard-Whats-On-A-Card.md](../JavaCard-Whats-On-A-Card.md).
+
+Other `gpshell3` operations (install, delete, keys…) work normally,
+since the secure channel itself is fine.
+
+
 SCP02 mutual authentication fails with
 
 ```
@@ -143,6 +196,7 @@ card_connect -reader readerName -protocol 1
 get_secure_channel_protocol_details
 
 # List applets and packages and security domains
+# (Open Platform 2.0.1' mode only: e0 = "everything"; undefined in GP 2.1.1 mode)
 get_status -element e0
 
 open_sc -scp 02 -key 404142434445464748494A4B4C4D4E4F

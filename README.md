@@ -97,6 +97,8 @@ There are different tools to interact with JavaCards.
 The naming is a bit confusing to me, because it is so similar.
 There is also the *GlobalPlatform Card Manager* on the JavaCard itself,
 a privileged on-card applet.
+Not sure what an ISD, a Security Domain, a Package, a Load File or a
+module is? See [./docs/JavaCard-Whats-On-A-Card.md](./docs/JavaCard-Whats-On-A-Card.md).
 
 `gp.jar` is the most powerful tool of them, and the one I use most often.
 
