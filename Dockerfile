@@ -135,6 +135,23 @@ RUN if [ -n "$JAVACARD_SIMULATOR" ] ; then \
     -global-pin 01020304050f 03 \
   ; fi
 
+# Enable the OpenSSL legacy provider.
+# Reason: SCP02 (gpshell3/gpshell via the static-3.0.0 deb, OpenSSL 3.0.2 core)
+# needs single DES (EVP_des_cbc in calculate_MAC_des_3des for the SCP02
+# EXTERNAL AUTHENTICATE MAC), and OpenSSL 3.x only provides single DES in the
+# legacy provider. Without it, SCP02 mutual authentication fails with
+# "error:0308010C:digital envelope routines::unsupported" (0x8030F00C).
+# gpshell3 reads /usr/lib/ssl/openssl.cnf (== /etc/ssl/openssl.cnf) and loads
+# /usr/lib/x86_64-linux-gnu/ossl-modules/legacy.so. Provider ABI is stable
+# across OpenSSL 3.x, so Debian's 3.5.x module works with the 3.0.2 core
+# (verified). When activating any provider explicitly, the default provider
+# must be activated too, otherwise it becomes unavailable.
+RUN sed -i \
+    -e '/^\[provider_sect\]/a legacy = legacy_sect' \
+    -e 's/^# activate = 1$/activate = 1/' \
+    /etc/ssl/openssl.cnf && \
+  printf '\n# Enabled for GlobalPlatform SCP02 (single DES), see gpshell docs\n[legacy_sect]\nactivate = 1\n' >> /etc/ssl/openssl.cnf
+
 WORKDIR /applet
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

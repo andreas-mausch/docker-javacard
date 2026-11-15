@@ -66,6 +66,55 @@ card_disconnect
 release_context
 ```
 
+# SCP02 and the OpenSSL legacy provider
+
+SCP02 mutual authentication fails with
+
+```
+error:0308010C:digital envelope routines::unsupported
+Mutual authentication failed
+```
+
+when the OpenSSL *legacy* provider is not activated.
+Reason: every SCP02 `EXTERNAL AUTHENTICATE` computes its MAC with
+`calculate_MAC_des_3des()`, which uses **single DES** (`EVP_des_cbc()`),
+and OpenSSL 3.x moved single DES out of the default provider into the
+legacy provider. (SCP03 uses AES and is unaffected.)
+
+The `gpshell3` binary from the static DEB links OpenSSL statically but
+still reads the OpenSSL config file (`/usr/lib/ssl/openssl.cnf`, a symlink
+to `/etc/ssl/openssl.cnf`) and loads
+`/usr/lib/x86_64-linux-gnu/ossl-modules/legacy.so` from the system.
+The Dockerfile therefore activates the `default` and `legacy` providers
+in `/etc/ssl/openssl.cnf`:
+
+```ini
+[provider_sect]
+legacy = legacy_sect
+default = default_sect
+
+[default_sect]
+activate = 1
+
+[legacy_sect]
+activate = 1
+```
+
+If you hit this error outside of our image, either apply the same config
+or point `OPENSSL_CONF` to a config file containing the snippet above
+(starting with `openssl_conf = openssl_init` / `[openssl_init]` /
+`providers = provider_sect`).
+
+Note that activating *any* provider explicitly also requires activating
+`default` explicitly, otherwise AES etc. stop working everywhere.
+
+Quick self-test (must produce ciphertext instead of "Error setting cipher"):
+
+```shell-session
+root@container:/# printf "01234567" | openssl enc -des-cbc -K 0101010101010101 -iv 0000000000000000 | od -An -tx1
+ a0 68 db ea b7 3d 14 0b 92 aa 0a bc 22 4a be 26
+```
+
 # Segmentation fault
 
 During my first tests I encountered a segmentation fault:
