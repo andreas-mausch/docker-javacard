@@ -143,6 +143,7 @@ jobs:
         # jcsl simulator's socket() call ("failed to create socket").
         # Lift both for this ephemeral simulator container on the runner;
         # locally (without those restrictions) it works without these flags.
+        set -o pipefail
         docker run --rm \
           --security-opt apparmor=unconfined \
           --security-opt seccomp=unconfined \
@@ -150,4 +151,6 @@ jobs:
           --volume ./maven-helloworld/hello.gpshell:/applet/hello.gpshell \
           --env START_JAVACARD_SIMULATOR=y \
           docker-javacard \
-          bash -c 'gp() { java -jar /javacard/gp-v25.10.20.jar "$@"; } && unset GP_KEY GP_KEY_ENC GP_KEY_MAC GP_KEY_DEK && gp --install ./helloworld-maven.cap && gpshell ./hello.gpshell'
+          bash -c 'gp() { java -jar /javacard/gp-v25.10.20.jar "$@"; } && unset GP_KEY GP_KEY_ENC GP_KEY_MAC GP_KEY_DEK && gp --install ./helloworld-maven.cap && gpshell ./hello.gpshell' | tee "$RUNNER_TEMP/oracle-simulator.log"
+        # "Hello" followed by the success status word 9000.
+        grep -Fxq 'Unwrapped response <-- 48656C6C6F9000' "$RUNNER_TEMP/oracle-simulator.log"
